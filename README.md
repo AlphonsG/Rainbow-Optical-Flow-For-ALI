@@ -1,6 +1,6 @@
 # Rainbow
 
-![](docs/readme/banner_img.png?raw=true "Rainbow")
+![](docs/images/banner_img.png?raw=true "Rainbow")
 
 Repository for software detailed in Application Note titled 'RAINBOW: Automated Air-Liquid Interface Cell Culture Analysis Using Deep Optical Flow'. See Abstract [below](#application-note-abstract) for more details.
 
@@ -68,15 +68,15 @@ An example ALI cell culture image series is provided here. Calling the `rainbow`
 
 ### Raw Image Series (left) and RAINBOW Optical Flow Visualisation (Right)
 
-<img src="docs/readme/raw_vs_flow.gif"/>
+<img src="docs/images/raw_vs_flow.gif"/>
 
 ### Magnitude Heatmaps Across Image Series
 
-<img src="docs/readme/heatmap.png" width="600"/>
+<img src="docs/images/heatmap.png" width="600"/>
 
 ### Quiver Plots Across Image Series
 
-<img src="docs/readme/quiver_plot.png?raw=true" width="600"/>
+<img src="docs/images/quiver_plot.png?raw=true" width="600"/>
 
 ## Application Note Abstract <a name="application-note-abstract"></a>
 
