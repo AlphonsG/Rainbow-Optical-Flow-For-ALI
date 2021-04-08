@@ -1,0 +1,3 @@
+[submodule "rainbow/optical_flow/PWCNet"]
+	path = rainbow/optical_flow/PWCNet
+	url = https://github.com/AlphonsGwatimba/tfoptflow
