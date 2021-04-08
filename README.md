@@ -16,7 +16,7 @@ Tested on Windows 10 using Python 3.7.
 
 1. Download and install [miniconda3](https://docs.conda.io/en/latest/miniconda.html) for your system.
 2. If the `conda` command cannot be directly called from a terminal then launch 'Anaconda Prompt (miniconda3)'
-3. Create a virtual environment with Python 3.7 called 'rainbow_env':
+3. From a terminal session or 'Anaconda Prompt', create a virtual environment with Python 3.7 called 'rainbow_env':
 
     ```conda create -n rainbow_env python=3.7```
 
@@ -29,7 +29,7 @@ Tested on Windows 10 using Python 3.7.
 
    ```git clone https://github.com/AlphonsGwatimba/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow.git```
 
-7. Navigate into cloned directory:
+7. Navigate into the cloned directory:
 
     ```cd Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow.git```
 8. Install Rainbow:
