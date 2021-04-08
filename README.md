@@ -1,5 +1,7 @@
 # Rainbow
 
+![](docs/readme/banner_img.png?raw=true "Rainbow")
+
 Repository for software detailed in Application Note titled 'RAINBOW: Automated Air-Liquid Interface Cell Culture Analysis Using Deep Optical Flow'. See Abstract [below](#application-note-abstract) for more details.
 
 ## Installation
@@ -45,7 +47,7 @@ A default .yaml configuration file for Rainbow is provided here. Please copy thi
 
 ### PWC-Net Checkpoint Files
 
-The deep learning model used to compute optical flow depends on checkpoint that need to be downloaded. The download location for these files is provided here. Please download these files and place in one folder. The path of this folder needs to be specified in the .yaml configuration file.
+The deep learning model used to compute optical flow depends on checkpoint that need to be downloaded. The download location for these files is provided [here](rainbow/optical_flow/checkpoints/pwc_net/pwcnet-lg-6-2-multisteps-chairsthingsmix/Checkpoint%20Files%20Download%20Location.txt). Please download these files and place in one folder. The path of this folder needs to be specified in the .yaml configuration file.
 ## Usage
 
 There is one main command line interface which you can use with the ```rainbow``` command
@@ -62,9 +64,15 @@ An example ALI cell culture image series is provided here. Calling the `rainbow`
 
 ### Raw Image Series (left) and RAINBOW Optical Flow Visualisation (Right)
 
+<img src="docs/readme/raw_vs_flow.gif"/>
+
 ### Magnitude Heatmaps Across Image Series
 
+<img src="docs/readme/heatmap.png" width="600"/>
+
 ### Quiver Plots Across Image Series
+
+<img src="docs/readme/quiver_plot.png?raw=true" width="600"/>
 
 ## Application Note Abstract <a name="application-note-abstract"></a>
 
@@ -73,4 +81,4 @@ The use of well differentiated, organotypic culture models of the airways, such 
 
 ## License
 
-MIT License
+[MIT License](LICENSE)
