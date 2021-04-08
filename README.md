@@ -4,6 +4,10 @@
 
 Repository for software detailed in Application Note titled 'RAINBOW: Automated Air-Liquid Interface Cell Culture Analysis Using Deep Optical Flow'. See Abstract [below](#application-note-abstract) for more details.
 
+## Preliminary Information
+
+Rainbow is portable and will run on Linux and Windows. Rainbow can also be run using a CPU but we recommend using a GPU for significant performance gains.
+
 ## Installation
 
 We recommend installing and running Rainbow within a virtual environment.
