@@ -78,7 +78,6 @@ pywin32==300
 pywinpty==0.5.7
 PyYAML==5.4.1
 pyzmq==22.0.3
-rainbow==0.1.0
 requests==2.25.1
 scikit-image==0.18.1
 scipy==1.6.2
