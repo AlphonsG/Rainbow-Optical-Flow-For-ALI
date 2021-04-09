@@ -1,4 +1,4 @@
-report_path: ./notebooks/report.ipynb
+report_path: ./examples/notebooks/report.ipynb
 
 nd2:
   iter_axs:

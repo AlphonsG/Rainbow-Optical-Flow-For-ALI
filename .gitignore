@@ -24,3 +24,5 @@ dist/
 rainbow.egg-info/
 
 notebooks/.ipynb_checkpoints/
+
+examples/notebooks/.ipynb_checkpoints/
