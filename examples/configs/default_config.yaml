@@ -1,0 +1,42 @@
+report_path: ./examples/notebooks/report.ipynb
+
+nd2:
+  iter_axs:
+    - 'z'
+    - 'm'
+    - 't'
+  bdl_axs:
+    - 'y'
+    - 'x'
+  naming_axs:
+  - 'm'
+
+mpp: 0.31302569743655434
+
+proc_bch_sz: 1
+max_qd_bches: 500
+q_sz: 200
+
+opt_flow_model: pwc_net
+
+pwc_net:
+  model:
+    opts:
+      verbose: False
+      ckpt_path: "./rainbow/optical_flow/checkpoints/pwc_net/\
+        pwcnet-lg-6-2-multisteps-chairsthingsmix/pwcnet.ckpt-595000"
+      batch_size: 1
+      gpu_devices:
+        - /device:GPU:0
+      controller: /device:GPU:0
+      use_dense_cx: True
+      use_res_cx: True
+      adapt_info: [1, 1024, 1280, 2]
+    mode: test
+
+  pred:
+    batch_size: 1
+    verbose: False
+
+  const_img_shape: True
+  tf_logging: False
