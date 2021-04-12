@@ -60,16 +60,17 @@ The deep learning model used to compute optical flow depends on checkpoint files
 
 ### Report
 
-Rainbow automatically generates a report after processing an image series. An example report is provided [here](examples/notebooks/report.ipynb) as a Jupyter Notebook (.ipynb file). The path of a .ipynb file needs to be specified in the .yaml configuration file for report generation.
+Rainbow automatically generates a report after processing an image series. An example report is provided [here](examples/notebooks/report.ipynb) as a Jupyter Notebook (.ipynb) file. The path of a .ipynb file needs to be specified in the .yaml configuration file for report generation.
+
 ## Usage
 
 There is one main command line interface which you can use with the ```rainbow``` command
 
-1. Within a terminal, activate the Rainbow virtual environment:
+1. Within a terminal, activate the created virtual environment:
 
    ```conda activate rainbow_env```
 
-2. Call the `rainbow` command with the required arguments to run. Enter `rainbow -h` for help.
+2. Call the `rainbow` command with the appropriate arguments to run. If you are ever lost or confused enter `rainbow -h` for help.
 
 ## Examples
 
@@ -97,4 +98,10 @@ An example ALI cell culture image series is provided [here](examples/image_serie
 RAINBOW: Automated Air-Liquid Interface Cell Culture Analysis Using Deep Optical Flow
 
 ### Abstract
-TBA
+To be released
+
+### Access
+To be released
+
+## Our Team
+[Learn more](https://walyanrespiratory.telethonkids.org.au/our-research/focus-areas/artifical-intelligence/)
