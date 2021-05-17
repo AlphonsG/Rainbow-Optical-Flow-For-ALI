@@ -11,7 +11,7 @@ REQUIRED_PACKAGES = [
     'pims-nd2==1.0',
     'PyYAML',
     'scikit-image',
-    'tensorflow==1.15.5',
+    'tensorflow==2.4.0',
     'tqdm'
 ]
 
