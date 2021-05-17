@@ -4,14 +4,14 @@ REQUIRED_PACKAGES = [
     'jupyterlab',
     'matplotlib',
     'natsort',
-    'numpy==1.19.5',
+    'numpy==1.18.5',
     'opencv-python',
     'pandas',
     'PIMS',
     'pims-nd2==1.0',
     'PyYAML',
     'scikit-image',
-    'tensorflow==1.15.0',
+    'tensorflow==1.15.5',
     'tqdm'
 ]
 
