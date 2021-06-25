@@ -24,7 +24,7 @@ class PWCNet(ModelInterface):
             tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.FATAL)
 
         curr_dir = os.path.abspath(os.path.dirname(__file__))
-        sys.path.insert(1, os.path.join(curr_dir, 'PWCNet', 'tfoptflow'))
+        sys.path.insert(1, os.path.join(curr_dir, 'third_party', 'pwc_net'))
         from model_pwcnet import ModelPWCNet, _DEFAULT_PWCNET_TEST_OPTIONS
 
         model_opts = deepcopy(_DEFAULT_PWCNET_TEST_OPTIONS)
