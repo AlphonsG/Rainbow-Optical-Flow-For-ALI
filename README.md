@@ -1,6 +1,6 @@
 # Rainbow
 
-![](docs/images/banner_img.png?raw=true "Rainbow")
+![](misc/images/banner_img.png?raw=true "Rainbow")
 
 Repository for software detailed in 'RAINBOW: Automated Air-Liquid Interface Cell Culture Analysis Using Deep Optical Flow' Application Note. See Abstract [below](#application-note-abstract) for more details.
 
@@ -53,7 +53,7 @@ Rainbow is a command line application. Enter `rainbow --help` within the `rainbo
 
 ### Configuration File
 
-Rainbow requires a configuration file to run. A base config file that can be modified is provided [here](examples/configs/default_config.yaml).
+Rainbow requires a configuration file to run. A base config file that can be modified is provided [here](misc/configs/default_config.yaml).
 
 ### Optical Flow
 
@@ -61,7 +61,7 @@ Rainbow uses a deep learning model called [PWC-Net](https://arxiv.org/abs/1709.0
 
 ### Analysis
 
-Rainbow can automatically generate an analysis report after computing the optical flow in an image series. A base report file that can be modified is provided [here](examples/notebooks/report.ipynb) as a Jupyter notebook. The path of a Jupyter notebook needs to specified in the config for automatic report generation.
+Rainbow can automatically generate an analysis report after computing the optical flow in an image series. A base report file that can be modified is provided [here](misc/notebooks/report.ipynb) as a Jupyter notebook. The path of a Jupyter notebook needs to specified in the config for automatic report generation.
 
 ## Examples
 
@@ -69,13 +69,13 @@ An example ALI cell culture image series is provided [here](examples/image_serie
 
 ### Raw Image Series (left) and Rainbow Optical Flow Visualisation (Right)
 
-<img src="docs/images/raw_vs_flow.gif" width="780"/>
+<img src="misc/images/raw_vs_flow.gif" width="780"/>
 
 ### Magnitude Heatmaps Across Image Series (Left) and Quiver Plots Across Image Series (Right)
 
 <p float="left">
-  <img src="docs/images/heatmap.gif" width="390" />
-  <img src="docs/images/quiver_plot.gif" width="390" />
+  <img src="misc/images/heatmap.gif" width="390" />
+  <img src="misc/images/quiver_plot.gif" width="390" />
 </p>
 
 ## License
