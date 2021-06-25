@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
 
-class ModelInterface:
+class BaseModel:
     __metaclass__ = ABCMeta
 
     @abstractmethod

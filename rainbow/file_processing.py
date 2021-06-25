@@ -3,7 +3,7 @@ from multiprocessing import Process, Queue
 from pathlib import Path
 
 from rainbow.data_analysis import analyze_data
-from rainbow.optical_flow.opt_flow import compute_opt_flow
+from rainbow.optical_flow.optical_flow import compute_opt_flow
 from rainbow.util import load_nd2_imgs, load_std_imgs
 
 

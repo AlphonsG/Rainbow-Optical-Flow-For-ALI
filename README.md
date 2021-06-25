@@ -57,7 +57,7 @@ Rainbow requires a configuration file to run. A base config file that can be mod
 
 ### Optical Flow
 
-Rainbow uses a deep learning model called [PWC-Net](https://arxiv.org/abs/1709.02371) to compute the optical flow in an image series. This model can be easily replaced with any other method for computing optical flow by writing a custom class that implements the [model_interface](rainbow/optical_flow/model_interface.py) interface ([pwc_net](rainbow/optical_flow/pwc_net.py) is an example of that).
+Rainbow uses a deep learning model called [PWC-Net](https://arxiv.org/abs/1709.02371) to compute the optical flow in an image series. This model can be easily replaced with any other method for computing optical flow by writing a custom class that implements the [base_model](rainbow/optical_flow/base_model.py) interface ([pwc_net](rainbow/optical_flow/pwc_net.py) is an example of that).
 
 ### Analysis
 

@@ -1,4 +1,4 @@
-from . import model_factory
-from . import model_interface
-from . import opt_flow
-from . import pwc_net
+# Copyright (c) 2021 Alphons Gwatimba
+#
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
