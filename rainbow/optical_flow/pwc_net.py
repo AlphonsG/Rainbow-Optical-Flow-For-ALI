@@ -3,10 +3,10 @@ import os
 import sys
 from copy import deepcopy
 
-from rainbow.optical_flow.model_interface import ModelInterface
+from rainbow.optical_flow.base_model import BaseModel
 
 
-class PWCNet(ModelInterface):
+class PWCNet(BaseModel):
     __sgle_insce__, __an_isce__ = None, None
 
     def __init__(self, mdl_cfg, reuse_mdl):
