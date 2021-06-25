@@ -16,7 +16,7 @@ import nbformat
 
 import numpy as np
 
-from rainbow.optical_flow.opt_flow import flow_to_img
+from rainbow.optical_flow.optical_flow import flow_to_img
 from rainbow.util import (apply_metadata, cleanup_dir, comb_imgs, save_img_ser,
                           save_video)
 
