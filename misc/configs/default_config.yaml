@@ -23,7 +23,7 @@ pwc_net:
   model:
     opts:
       verbose: False
-      ckpt_path: "./rainbow/optical_flow/models/pwc_net/checkpoints\
+      ckpt_path: "./rainbow/optical_flow/models/pwc_net/checkpoints/\
         pwcnet-lg-6-2-multisteps-chairsthingsmix/pwcnet.ckpt-595000"
       batch_size: 1
       gpu_devices:
