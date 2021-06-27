@@ -11,8 +11,9 @@ REQUIRED_PACKAGES = [
     'pims-nd2==1.0',
     'PyYAML',
     'scikit-image',
-    'tensorflow==1.15.5',
-    'tqdm'
+    'tensorflow-gpu==1.15.5',
+    'tqdm',
+    'ipympl'
 ]
 
 setup(
