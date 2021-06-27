@@ -77,7 +77,7 @@ An example ALI cell culture image series is provided [here](examples/image_serie
 
 <img src="misc/images/raw_vs_flow.gif" width="780"/>
 
-### Magnitude Heatmaps Across Image Series (Left) and Quiver Plots Across Image Series (Right)
+### Magnitude Heatmaps (Left) and Quiver Plots (Right) Across Image Series
 
 <p float="left">
   <img src="misc/images/heatmap.gif" width="390" />
