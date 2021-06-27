@@ -1,6 +1,8 @@
+import json
 import os
 import shutil
 import warnings
+from datetime import datetime
 from pathlib import Path
 
 import cv2
@@ -11,8 +13,10 @@ import numpy as np
 
 from pims import Frame, ND2Reader_SDK as ND2_Reader
 
+import rainbow
 
-def load_nd2_imgs(nd2, axs_config):
+
+def load_nd2_imgs(nd2, axs_config, mpp=None):
     with warnings.catch_warnings():
         warnings.simplefilter('ignore')
         frms = ND2_Reader(nd2)
@@ -36,6 +40,9 @@ def load_nd2_imgs(nd2, axs_config):
         frame.metadata['path'] = nd2
         frame.metadata['img_name'] = ('Image_{}.png'.format(frm.metadata[
                                       axs_config['iter_axs'][-1]]))
+        if 'mpp' not in frame.metdata:
+            frame.metadata['mpp'] = mpp
+
         if i == 0 or i % ser_len != 0:
             curr_img_ser.append(frame)
         else:
@@ -60,7 +67,9 @@ def load_std_imgs(input_dir, mpp=None):
         if img is not None:
             frame = Frame(img)
             frame.metadata['type'], frame.metadata['path'], frame.metadata[
-                'img_name'] = Path(f).suffix, f, Path(f).name
+                'img_name'], frame.metadata['mpp'] = (Path(f).suffix, f,
+                                                      Path(f).name, mpp)  # mp?
+
             if len(imgs) == 0:
                 frame.metadata['img_ser_md'] = {'type': Path(f).suffix,
                                                 'dir': input_dir,
@@ -120,3 +129,37 @@ def apply_metadata(img1, img2):
     img1.metadata = img2.metadata
 
     return img1
+
+
+def save_optical_flow(preds, output_dir):
+    np.save(os.path.join(output_dir, f'{rainbow.OPTICAL_FLOW_FILENAME}.npy'),
+            np.array(preds),
+            allow_pickle=False)
+
+
+def load_optical_flow(flow_path):
+    raw_preds = np.load(flow_path)
+    preds = []
+    for i in range(0, raw_preds.shape[0]):
+        preds.append(raw_preds[i, ...])
+
+    return preds
+
+
+def save_img_ser_metadata(imgs, output_dir):
+    metadata = imgs[0].metadata['img_ser_md']
+    now = datetime.now()
+    dt_str = now.strftime('%d %B %Y, %H:%M:%S')
+    metadata['analysis_timestamp'] = dt_str
+    with open(os.path.join(output_dir, f'{rainbow.METADATA_FILENAME}.json'),
+              'w') as f:
+        json.dump(metadata, f, indent=4, sort_keys=True, default=str)
+
+
+def video_reshape(vid_path, set_wdh=None):
+    cap = cv2.VideoCapture(vid_path)
+    hgt, wdh, _ = cap.read()[1].shape
+    dsp_wdh = set_wdh if set_wdh is not None else wdh
+    dsp_hgt = dsp_wdh * (hgt / wdh) if wdh is not None else hgt
+
+    return dsp_wdh, dsp_hgt

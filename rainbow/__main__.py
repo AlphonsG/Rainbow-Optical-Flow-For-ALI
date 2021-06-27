@@ -42,13 +42,16 @@ def process_args():
                         'compatible files in root directory subfolders')
     parser.add_argument('--debug', action='store_true',
                         help='run in debug mode i.e. single process')
+    parser.add_argument('--overwrite-flow', action='store_true',
+                        help='recompute optical flow even if preexisting '
+                             'optical flow file exists for an image series')
     args = parser.parse_args()
 
     return args
 
 
 def main(args=None):
-    args = process_args()
+    args = process_args()  # check checkpoint path
     assert os.path.isdir(args.root_dir), ('Invalid root directory path '
                                           'provided.')
     assert os.path.isfile(args.config), 'Invalid config file path provided.'
@@ -60,7 +63,7 @@ def main(args=None):
 
     start = time()
     process_files(args.root_dir, config, args.num_workers, args.recursive,
-                  args.debug)
+                  args.debug, args.overwrite_flow)
     end = time()
     runtime = int(end - start)
     print('Finished in {} seconds!'.format(runtime))
