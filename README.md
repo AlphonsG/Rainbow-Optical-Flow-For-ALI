@@ -1,8 +1,9 @@
 # Rainbow
 
 ![](https://img.shields.io/github/license/AlphonsGwatimba/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow)
-![](https://img.shields.io/github/languages/top/AlphonsGwatimba/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow)
 [![](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
+![](https://img.shields.io/github/languages/top/AlphonsGwatimba/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow)
+![](https://img.shields.io/badge/platform-windows%20%7C%20linux%20%7C%20macOS-lightgrey)
 ![](https://img.shields.io/github/repo-size/AlphonsGwatimba/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow)
 
 ![](misc/images/banner_img.png?raw=true "Rainbow")
