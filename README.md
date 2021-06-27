@@ -1,29 +1,30 @@
 # Rainbow
 
-![](docs/images/banner_img.png?raw=true "Rainbow")
+![](misc/images/banner_img.png?raw=true "Rainbow")
 
 Repository for software detailed in 'RAINBOW: Automated Air-Liquid Interface Cell Culture Analysis Using Deep Optical Flow' Application Note. See Abstract [below](#application-note-abstract) for more details.
 
 ## Preliminary Information
 
-Rainbow is portable and will run on Linux and Windows. Rainbow can also be run using a CPU but we recommend using a GPU for significant performance gains. Rainbow depends on TensorFlow for CPU or GPU based inference. Data can also be analyzed in parallel using multiprocessing.
+Rainbow can be installed on popular operating systems such as Linux and Windows. We recommend using a GPU-enabled system for fast runtimes. Rainbow can also concurrently perform data analysis report generation for multiple image series.
 
 ## Installation
 
 We recommend installing and running Rainbow within a virtual environment.
 
-Tested on Windows 10 using Python 3.7.
+Tested on Windows 10 using Python 3.7 and miniconda3.
 
 ### Pre-requisites
 
-1. Download and install [miniconda3](https://docs.conda.io/en/latest/miniconda.html) for your system.
-2. Download and install [Git](https://git-scm.com/downloads) for your system.
+1. Download and install [miniconda3](https://docs.conda.io/en/latest/miniconda.html), [Git](https://git-scm.com/downloads), and [Microsoft Visual C++ 2008 Service Pack 1 Redistributable Package](https://www.microsoft.com/en-US/download/details.aspx?id=26368)  for your system.
 
 ### Installing Rainbow
-1. If the `conda` command cannot be directly called from a terminal then launch 'Anaconda Prompt (miniconda3)'
-2. From a terminal session or 'Anaconda Prompt', create a virtual environment with Python 3.7 called 'rainbow_env':
 
-    ```conda create -n rainbow_env python=3.7```
+1. Launch 'Anaconda Prompt (miniconda3)'. The proceeding commands will be entered into this window.
+
+2. Create a virtual environment with Python 3.7 and pywin32 preinstalled called 'rainbow_env':
+
+    ```conda create -n rainbow_env python=3.7 pywin32```
 
 3. Activate the environment:
 
@@ -40,57 +41,51 @@ Tested on Windows 10 using Python 3.7.
 6. Install Rainbow:
 
    ```python setup.py install```
-7.  Virtual environment can be exited using:
 
-    ```conda deactivate rainbow_env```
+- Note:  Virtual environment can be deactivated using:
 
-
-**Note**: Windows users ensure [Microsoft Visual C++ 2008 Service Pack 1 Redistributable Package](https://www.microsoft.com/en-US/download/details.aspx?id=26368) is installed
-
-
-## Additional Setup
-
-### Configuration File
-
-A default .yaml configuration file for Rainbow is provided [here](examples/configs/default_config.yaml). Please copy this file and make the necessary changes according to your requirements and environment. Please pass the path of your configuration file as an argument to ```rainbow``` when running.
-
-### PWC-Net Pre-trained Models
-
-The deep learning model used to compute optical flow depends on checkpoint files that need to be downloaded. The download location for these files is provided [here](rainbow/optical_flow/checkpoints/pwc_net/pwcnet-lg-6-2-multisteps-chairsthingsmix/Checkpoint%20Files%20Download%20Location.txt). Please download these files and place in one folder. The path of this folder needs to be specified in the .yaml configuration file.
-
-### Report
-
-Rainbow automatically generates a report after processing an image series. An example report is provided [here](examples/notebooks/report.ipynb) as a Jupyter Notebook (.ipynb) file. The path of a .ipynb file needs to be specified in the .yaml configuration file for report generation.
+   ```conda deactivate rainbow_env```
 
 ## Usage
 
-There is one main command line interface which you can use with the ```rainbow``` command
+Rainbow is a command line application. Enter `rainbow --help` within the `rainbow_env` environment for details on how to run Rainbow.
+## Additional Information
 
-1. Within a terminal, activate the created virtual environment:
+### Configuration File
 
-   ```conda activate rainbow_env```
+Rainbow requires a configuration file to run. A base config file that can be modified is provided [here](misc/configs/default_config.yaml).
 
-2. Call the `rainbow` command with the appropriate arguments to run. If you are ever lost or confused enter `rainbow -h` for help.
+### Optical Flow
+
+Rainbow uses a deep learning model called [PWC-Net](https://arxiv.org/abs/1709.02371) to compute the optical flow in an image series. This model can be easily replaced with any other method for computing optical flow by writing a custom class that implements the [base_model](rainbow/optical_flow/base_model.py) interface ([pwc_net](rainbow/optical_flow/pwc_net.py) is an example of that).
+
+### Analysis
+
+Rainbow can automatically generate an analysis report after computing the optical flow in an image series. A base report file that can be modified is provided [here](misc/notebooks/report.ipynb) as a Jupyter notebook. The path of a Jupyter notebook needs to specified in the config for automatic report generation.
 
 ## Examples
 
-An example ALI cell culture image series is provided [here](examples/image_series_1). Calling the `rainbow` command with this folder as the `root-dir` argument, default .yaml configuration file as the `config` argument and `--non-recursive` option produces [this](examples/image_series_1/(tif)%20191018_HNA-ALI_d14.nd2%20-%20191018_HNA-ALI_d14.nd2%20(series%2003)0000_etc) results folder. Some of the generated images can be seen below.
+An example ALI cell culture image series is provided [here](examples/image_series_1). The optical flow computation and analysis report output files generated by Rainbow are also provided. Examples of some of the generated images can be seen below.
 
 ### Raw Image Series (left) and Rainbow Optical Flow Visualisation (Right)
 
-<img src="docs/images/raw_vs_flow.gif"/>
+<img src="misc/images/raw_vs_flow.gif" width="780"/>
 
-### Magnitude Heatmaps Across Image Series
+### Magnitude Heatmaps Across Image Series (Left) and Quiver Plots Across Image Series (Right)
 
-<img src="docs/images/heatmap.gif" width="600"/>
-
-### Quiver Plots Across Image Series
-
-<img src="docs/images/quiver_plot.gif" width="600"/>
+<p float="left">
+  <img src="misc/images/heatmap.gif" width="390" />
+  <img src="misc/images/quiver_plot.gif" width="390" />
+</p>
 
 ## License
 
 [MIT License](LICENSE)
+
+## Acknowledgements
+
+- https://github.com/philferriere/tfoptflow
+- https://docs.opencv.org/3.4/d4/dee/tutorial_optical_flow.html
 
 ## Application Note <a name="application-note-abstract"></a>
 

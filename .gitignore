@@ -1,12 +1,3 @@
-
-rainbow/optical_flow/checkpoints/pwc_net/pwcnet-lg-6-2-multisteps-chairsthingsmix/checkpoint
-
-rainbow/optical_flow/checkpoints/pwc_net/pwcnet-lg-6-2-multisteps-chairsthingsmix/pwcnet.ckpt-595000.data-00000-of-00001
-
-rainbow/optical_flow/checkpoints/pwc_net/pwcnet-lg-6-2-multisteps-chairsthingsmix/pwcnet.ckpt-595000.index
-
-rainbow/optical_flow/checkpoints/pwc_net/pwcnet-lg-6-2-multisteps-chairsthingsmix/pwcnet.ckpt-595000.meta
-
 rainbow/.vscode/settings.json
 
 example/.ipynb_checkpoints/report-checkpoint.ipynb
@@ -26,3 +17,5 @@ rainbow.egg-info/
 notebooks/.ipynb_checkpoints/
 
 examples/notebooks/.ipynb_checkpoints/
+
+misc/notebooks/.ipynb_checkpoints/

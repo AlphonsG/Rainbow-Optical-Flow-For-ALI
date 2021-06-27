@@ -3,13 +3,15 @@ from multiprocessing import Process, Queue
 from pathlib import Path
 
 from rainbow.data_analysis import analyze_data
-from rainbow.optical_flow.opt_flow import compute_opt_flow
+from rainbow.optical_flow.optical_flow import compute_opt_flow
 from rainbow.util import load_nd2_imgs, load_std_imgs
 
 
-def process_files(root_dir, config, num_wrkers, recursive):
+def process_files(root_dir, config, num_wrkers, recursive, debug,
+                  overwrite_flow):
     queue = Queue(config['q_sz'])
-    procs, num_wrkers = initialize_workers(num_wrkers, config, queue)
+    if not debug:
+        procs = initialize_workers(num_wrkers, config, queue)
     curr_img_batch, img_batches = [], []
     for root_dir, dirs, files in os.walk(root_dir):
         img_paths = [root_dir]
@@ -18,7 +20,7 @@ def process_files(root_dir, config, num_wrkers, recursive):
         for img_path in img_paths:
             imgs = ([load_std_imgs(img_path, config['mpp'])] if
                     os.path.isdir(img_path) else load_nd2_imgs(img_path,
-                    config['nd2']))
+                    config['nd2'], config['mpp']))
             if len(imgs[0]) == 0:
                 continue
             for img_ser in imgs:
@@ -27,16 +29,19 @@ def process_files(root_dir, config, num_wrkers, recursive):
                     img_batches.append(curr_img_batch)
                     curr_img_batch = []
                     if len(img_batches) == config['max_qd_bches']:
-                        process_img_batches(img_batches, config, queue)
+                        process_img_batches(img_batches, config, queue, debug,
+                                            overwrite_flow)
                         img_batches = []
         if not recursive:
             break
 
     img_batches.append(curr_img_batch)
-    process_img_batches(img_batches, config, queue)
-    queue.put([None])
-    for proc in procs:
-        proc.join()
+    process_img_batches(img_batches, config, queue, debug, overwrite_flow)
+
+    if not debug:
+        queue.put([None])
+        for proc in procs:
+            proc.join()
 
 
 def initialize_workers(num_wrkers, config, queue):
@@ -52,10 +57,15 @@ def initialize_workers(num_wrkers, config, queue):
     for proc in procs:
         proc.start()
 
-    return procs, num_wrkers
+    return procs
 
 
-def process_img_batches(img_batches, config, queue):
-    data = compute_opt_flow(img_batches, config)
-    for d_bch in data:
-        queue.put(d_bch)
+def process_img_batches(img_batches, config, queue, debug, overwrite_flow):
+    output_dirs = compute_opt_flow(img_batches, config, save_raw_imgs=True,
+                                   overwrite_flow=overwrite_flow)
+    for output_dirs_bch in output_dirs:
+        queue.put(output_dirs_bch)
+    if debug:
+        queue.put([None])
+        analyze_data(queue, config)
+        queue.get()
