@@ -7,7 +7,8 @@ from rainbow.optical_flow.optical_flow import compute_opt_flow
 from rainbow.util import load_nd2_imgs, load_std_imgs
 
 
-def process_files(root_dir, config, num_wrkers, recursive, debug):
+def process_files(root_dir, config, num_wrkers, recursive, debug,
+                  overwrite_flow):
     queue = Queue(config['q_sz'])
     if not debug:
         procs = initialize_workers(num_wrkers, config, queue)
@@ -19,7 +20,7 @@ def process_files(root_dir, config, num_wrkers, recursive, debug):
         for img_path in img_paths:
             imgs = ([load_std_imgs(img_path, config['mpp'])] if
                     os.path.isdir(img_path) else load_nd2_imgs(img_path,
-                    config['nd2']))
+                    config['nd2'], config['mpp']))
             if len(imgs[0]) == 0:
                 continue
             for img_ser in imgs:
@@ -28,13 +29,14 @@ def process_files(root_dir, config, num_wrkers, recursive, debug):
                     img_batches.append(curr_img_batch)
                     curr_img_batch = []
                     if len(img_batches) == config['max_qd_bches']:
-                        process_img_batches(img_batches, config, queue, debug)
+                        process_img_batches(img_batches, config, queue, debug,
+                                            overwrite_flow)
                         img_batches = []
         if not recursive:
             break
 
     img_batches.append(curr_img_batch)
-    process_img_batches(img_batches, config, queue, debug)
+    process_img_batches(img_batches, config, queue, debug, overwrite_flow)
 
     if not debug:
         queue.put([None])
@@ -58,10 +60,11 @@ def initialize_workers(num_wrkers, config, queue):
     return procs
 
 
-def process_img_batches(img_batches, config, queue, debug):
-    data = compute_opt_flow(img_batches, config)
-    for d_bch in data:
-        queue.put(d_bch)
+def process_img_batches(img_batches, config, queue, debug, overwrite_flow):
+    output_dirs = compute_opt_flow(img_batches, config, save_raw_imgs=True,
+                                   overwrite_flow=overwrite_flow)
+    for output_dirs_bch in output_dirs:
+        queue.put(output_dirs_bch)
     if debug:
         queue.put([None])
         analyze_data(queue, config)

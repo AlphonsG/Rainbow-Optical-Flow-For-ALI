@@ -1,27 +1,56 @@
-from collections import defaultdict
+import os
+from pathlib import Path
 
 import cv2
 
 import numpy as np
 
+import rainbow
 from rainbow.optical_flow.model_factory import ModelFactory
+from rainbow.util import (cleanup_dir, save_img_ser, save_img_ser_metadata,
+                          save_optical_flow)
+
+OPTICAL_FLOW_FILENAME = 'optical_flow'
 
 
-def compute_opt_flow(img_batches, config, reuse_mdl=True):
+def compute_opt_flow(img_batches, config, reuse_mdl=True, save_raw_imgs=False,
+                     overwrite_flow=False):
     mdl_fcty = ModelFactory()
     model = mdl_fcty.get_model(config['opt_flow_model'],
                                config[config['opt_flow_model']], reuse_mdl)
-    data = []
+    output_dirs = []
     for img_batch in img_batches:
-        d_bch = []
+        output_dirs_bch = []
         for imgs in img_batch:
-            preds = model.predict(imgs)
-            d = defaultdict(list)
-            d['Raw Images'], d['preds'] = imgs, preds
-            d_bch.append(d)
-        data.append(d_bch)
+            name, ext = os.path.splitext(imgs[0].metadata['img_name'])
+            ser = (' Series {})'.format(imgs[0].metadata[config['nd2'][
+                   'naming_axs'][0]]) if ext == '.nd2' else '')
+            output_dir = '({}) {}{}_etc'.format(ext.replace('.', ''), name,
+                                                ser)
+            output_dir = os.path.join(imgs[0].metadata['img_ser_md']['dir'],
+                                      output_dir)
 
-    return data
+            if not overwrite_flow and os.path.isdir(output_dir) and (
+                    rainbow.OPTICAL_FLOW_FILENAME in
+                    [Path(f).stem for f in next(os.walk(output_dir))[2]]):
+                output_dirs_bch.append(output_dir)
+                continue
+            preds = model.predict(imgs)
+            if not cleanup_dir(output_dir):
+                continue
+            os.mkdir(output_dir)
+
+            save_optical_flow(preds, output_dir)
+            output_dirs_bch.append(output_dir)
+            if save_raw_imgs:
+                raw_imgs_dir = os.path.join(output_dir,
+                                            rainbow.RAW_IMGS_DIR_NAME)
+                os.mkdir(raw_imgs_dir)
+                save_img_ser(imgs, raw_imgs_dir)
+                save_img_ser_metadata(imgs, output_dir)
+        output_dirs.append(output_dirs_bch)
+
+    return output_dirs
 
 
 def flow_to_img(flow, normalize=True, info=None, flow_mag_max=None):
