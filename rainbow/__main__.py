@@ -40,8 +40,6 @@ def process_args():
     parser.add_argument('--non-recursive', dest='recursive',
                         action='store_false', help='disable processing of '
                         'compatible files in root directory subfolders')
-    parser.add_argument('--debug', action='store_true',
-                        help='run in debug mode i.e. single process')
     parser.add_argument('--overwrite-flow', action='store_true',
                         help='recompute optical flow even if preexisting '
                              'optical flow file exists for an image series')
@@ -63,7 +61,7 @@ def main(args=None):
 
     start = time()
     process_files(args.root_dir, config, args.num_workers, args.recursive,
-                  args.debug, args.overwrite_flow)
+                  args.overwrite_flow)
     end = time()
     runtime = int(end - start)
     print('Finished in {} seconds!'.format(runtime))

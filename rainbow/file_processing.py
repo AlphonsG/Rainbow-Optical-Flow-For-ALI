@@ -9,10 +9,9 @@ from rainbow.util import load_nd2_imgs, load_std_imgs
 SENTINEL = 'STOP'
 
 
-def process_files(root_dir, config, num_wrkrs, recursive, debug,
-                  overwrite_flow):
+def process_files(root_dir, config, num_wrkrs, recursive, overwrite_flow):
     queue = Queue(config['q_sz'])
-    if not debug:
+    if num_wrkrs != 1:
         wrkrs = initialize_workers(num_wrkrs, config, queue)
     for curr_dir, dirs, files in os.walk(root_dir):
         img_paths = [curr_dir] + [os.path.join(curr_dir, f) for f in files if
@@ -28,13 +27,13 @@ def process_files(root_dir, config, num_wrkrs, recursive, debug,
                                               save_raw_imgs=True,
                                               overwrite_flow=overwrite_flow)
                 queue.put(output_dir)
-                if debug:
+                if num_wrkrs == 1:
                     queue.put(SENTINEL)
                     analyze_data(queue, config)
         if not recursive:
             break
 
-    if not debug:
+    if num_wrkrs != 1:
         queue.put(SENTINEL)
         for wrkr in wrkrs:
             wrkr.join()
