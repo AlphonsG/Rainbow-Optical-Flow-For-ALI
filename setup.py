@@ -3,6 +3,7 @@ from setuptools import find_packages, setup
 REQUIRED_PACKAGES = [
     'jupyterlab',
     'matplotlib',
+    'moviepy',
     'natsort',
     'numpy==1.18.5',
     'opencv-python',
