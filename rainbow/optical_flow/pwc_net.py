@@ -67,13 +67,6 @@ class PWCNet(BaseModel):
 
         return preds
 
-    def get_img_pairs(self, imgs):
-        img_pairs = []
-        for i in range(0, len(imgs) - 1):
-            img_pairs.append((imgs[i], imgs[i + 1]))
-
-        return img_pairs
-
     def apply_adapt_info(self, imgs):
         shps = [img.shape for img in imgs]
         if not shps.count(shps[0]) == len(shps):

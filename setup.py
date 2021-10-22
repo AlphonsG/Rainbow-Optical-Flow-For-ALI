@@ -14,7 +14,8 @@ REQUIRED_PACKAGES = [
     'scikit-image',
     'tensorflow-gpu==1.15.5',
     'tqdm',
-    'ipympl'
+    'ipympl',
+    'einops'
 ]
 
 setup(

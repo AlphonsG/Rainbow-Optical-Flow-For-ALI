@@ -1,3 +1,6 @@
 [submodule "rainbow/optical_flow/third_party/pwc_net"]
 	path = rainbow/optical_flow/third_party/pwc_net
 	url = https://github.com/AlphonsGwatimba/tfoptflow
+[submodule "rainbow/optical_flow/third_party/gma"]
+	path = rainbow/optical_flow/third_party/gma
+	url = https://github.com/AlphonsG/GMA
