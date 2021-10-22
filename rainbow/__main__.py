@@ -17,8 +17,7 @@ def process_args():
                             or standard image files such as .png
                             files. Rainbow processes all
                             compatible files in the provided root
-                            directory and in every
-                            subfolder by default. The results of
+                            directory. The results of
                             the analysis are placed in a
                             folder that is created in the
                             same directory as the analyzed
@@ -37,9 +36,8 @@ def process_args():
     parser.add_argument('--num-workers', type=int, help='maximum '
                         'number of workers to use for parallel analysis '
                         '(default equals CPU core count)')
-    parser.add_argument('--non-recursive', dest='recursive',
-                        action='store_false', help='disable processing of '
-                        'compatible files in root directory subfolders')
+    parser.add_argument('--subdirs', help='process files in root directory '
+                        'subfolders instead', action='store_true')
     parser.add_argument('--overwrite-flow', action='store_true',
                         help='recompute optical flow even if preexisting '
                              'optical flow file exists for an image series')
@@ -60,7 +58,7 @@ def main(args=None):
         config = yaml.safe_load(f)
 
     start = time()
-    process_files(args.root_dir, config, args.num_workers, args.recursive,
+    process_files(args.root_dir, config, args.num_workers, args.subdirs,
                   args.overwrite_flow)
     end = time()
     runtime = int(end - start)

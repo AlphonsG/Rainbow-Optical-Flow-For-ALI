@@ -9,11 +9,22 @@ from rainbow.util import load_nd2_imgs, load_std_imgs
 SENTINEL = 'STOP'
 
 
-def process_files(root_dir, config, num_wrkrs, recursive, overwrite_flow):
+def process_files(root_dir, config, num_wrkrs, subdirs, overwrite_flow):
     queue = Queue(config['q_sz'])
     if num_wrkrs != 1:
         wrkrs = initialize_workers(num_wrkrs, config, queue)
-    for curr_dir, dirs, files in os.walk(root_dir):
+
+    try:
+        dirs = [os.path.join(root_dir, curr_dir) for curr_dir in
+                next(os.walk(root_dir))[1]] if subdirs else [root_dir]
+    except StopIteration:
+        print(f'Root directory {root_dir} empty.')
+
+    for curr_dir in dirs:
+        try:
+            files = next(os.walk(curr_dir))[2]
+        except StopIteration:
+            files = []
         img_paths = [curr_dir] + [os.path.join(curr_dir, f) for f in files if
                                   Path(f).suffix == '.nd2']
         for img_path in img_paths:
@@ -30,7 +41,7 @@ def process_files(root_dir, config, num_wrkrs, recursive, overwrite_flow):
                 if num_wrkrs == 1:
                     queue.put(SENTINEL)
                     analyze_data(queue, config)
-        if not recursive:
+        if not subdirs:
             break
 
     if num_wrkrs != 1:
