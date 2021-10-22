@@ -6,6 +6,8 @@ from rainbow.data_analysis import analyze_data
 from rainbow.optical_flow.optical_flow import compute_opt_flow
 from rainbow.util import load_nd2_imgs, load_std_imgs
 
+SENTINEL = 'STOP'
+
 
 def process_files(root_dir, config, num_wrkrs, recursive, debug,
                   overwrite_flow):
@@ -27,13 +29,13 @@ def process_files(root_dir, config, num_wrkrs, recursive, debug,
                                               overwrite_flow=overwrite_flow)
                 queue.put(output_dir)
                 if debug:
-                    queue.put(None)
+                    queue.put(SENTINEL)
                     analyze_data(queue, config)
         if not recursive:
             break
 
     if not debug:
-        queue.put(None)
+        queue.put(SENTINEL)
         for wrkr in wrkrs:
             wrkr.join()
 

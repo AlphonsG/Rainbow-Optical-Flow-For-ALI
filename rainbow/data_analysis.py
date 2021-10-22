@@ -21,16 +21,18 @@ import scipy.stats
 
 from traitlets.config import Config as NotebookHTMLConfig
 
+SENTINEL = 'STOP'
+
 
 def analyze_data(queue, config):
     while True:
         output_dir = queue.get()
-            if output_dir is None:
-                # put it back so that other consumers see it
-            queue.put(None)
-                return 0
+        if output_dir == SENTINEL:
+            # put it back so that other consumers see it
+            queue.put(SENTINEL)
+            return 0
 
-            gen_report(output_dir, config['report_path'])
+        gen_report(output_dir, config['report_path'])
 
 
 def gen_report(output_dir, report_path, html=True):
