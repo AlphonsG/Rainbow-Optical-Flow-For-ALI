@@ -17,7 +17,23 @@ proc_bch_sz: 1
 max_qd_bches: 500
 q_sz: 200
 
-opt_flow_model: pwc_net
+opt_flow_model: gma
+
+gma:
+  # restore checkpoint
+  model: gma-sintel.pth
+  # define model name
+  model_name: GMA
+  # number of heads in attention and aggregation
+  num_heads: 1
+  # only use position-wise attention
+  position_only: no
+  # use position and content-wise attention
+  position_and_content: no
+  # use mixed precision
+  mixed_precision: no
+  # cpu or cuda (for gpu)
+  device: cpu
 
 pwc_net:
   model:

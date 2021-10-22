@@ -16,3 +16,10 @@ class BaseModel:
     @abstractmethod
     def predict(self):
         raise NotImplementedError
+
+    def get_img_pairs(self, imgs):
+        img_pairs = []
+        for i in range(0, len(imgs) - 1):
+            img_pairs.append((imgs[i], imgs[i + 1]))
+
+        return img_pairs
