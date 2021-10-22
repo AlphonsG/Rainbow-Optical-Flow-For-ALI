@@ -13,9 +13,7 @@ nd2:
 
 mpp: 0.31302569743655434
 
-proc_bch_sz: 1
-max_qd_bches: 500
-q_sz: 200
+queue_size: 200
 
 opt_flow_model: gma
 
