@@ -28,15 +28,15 @@ def process_args():
                             named to easily identify the original
                             sequence. Rainbow can utilize a GPU
                             to compute optical flow and can
-                            analyze multiple folders in parallel""")
+                            analyze multiple folders in parallel.""")
     parser.add_argument('root_dir', type=str, help='path to root directory '
                         'to begin searching for compatible files to process '
                         'in')
     parser.add_argument('config', type=str, help='path to YAML configuration '
                         'file')
-    parser.add_argument('--num-workers', type=int, default=-1, help='maximum '
-                        'number of CPUs to utilize for parallel analysis '
-                        '(default (-1) uses all CPUs)')
+    parser.add_argument('--num-workers', type=int, help='maximum '
+                        'number of workers to use for parallel analysis '
+                        '(default equals CPU core count)')
     parser.add_argument('--non-recursive', dest='recursive',
                         action='store_false', help='disable processing of '
                         'compatible files in root directory subfolders')
@@ -55,8 +55,8 @@ def main(args=None):
     assert os.path.isdir(args.root_dir), ('Invalid root directory path '
                                           'provided.')
     assert os.path.isfile(args.config), 'Invalid config file path provided.'
-    assert args.num_workers == -1 or args.num_workers > 0, ('Invalid CPU '
-                                                            'count provided.')
+    assert args.num_workers is None or args.num_workers > 0, (
+        'Invalid number of workers provided.')
 
     with open(args.config) as f:
         config = yaml.safe_load(f)

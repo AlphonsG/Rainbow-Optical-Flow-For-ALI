@@ -24,11 +24,10 @@ from traitlets.config import Config as NotebookHTMLConfig
 
 def analyze_data(queue, config):
     while True:
-        output_dirs = queue.get()
-        for output_dir in output_dirs:
+        output_dir = queue.get()
             if output_dir is None:
                 # put it back so that other consumers see it
-                queue.put([None])
+            queue.put(None)
                 return 0
 
             gen_report(output_dir, config['report_path'])
