@@ -7,6 +7,8 @@ from pathlib import Path
 
 import cv2
 
+from moviepy.editor import ImageSequenceClip
+
 from natsort import natsorted
 
 import numpy as np
@@ -14,6 +16,8 @@ import numpy as np
 from pims import Frame, ND2Reader_SDK as ND2_Reader
 
 import rainbow
+
+VID_FILE_EXT = '.mp4'
 
 
 def load_nd2_imgs(nd2, axs_config, mpp=None):
@@ -112,16 +116,10 @@ def save_video(input_dir, output_path, fps=5):
     if len(imgs) == 0:
         return False
 
-    height, width, layers = imgs[0].shape
-    four_cc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
-    out = cv2.VideoWriter(output_path, four_cc, fps, (width, height))
-
-    for img in imgs:
-        out.write(img)
-
-    # Release everything if job is finished
-    out.release()
-    cv2.destroyAllWindows()
+    os.environ['FFREPORT'] = 'file='
+    video = ImageSequenceClip([img for img in imgs], fps=fps)
+    video.write_videofile(os.path.join(output_path + VID_FILE_EXT),
+                          logger=None, write_logfile=False)
 
 
 def apply_metadata(img1, img2):
