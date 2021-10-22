@@ -117,7 +117,8 @@ def save_video(input_dir, output_path, fps=5):
         return False
 
     os.environ['FFREPORT'] = 'file='
-    video = ImageSequenceClip([img for img in imgs], fps=fps)
+    video = ImageSequenceClip([cv2.cvtColor(img, cv2.COLOR_BGR2RGB) for img in
+                               imgs], fps=fps)
     video.write_videofile(os.path.join(output_path + VID_FILE_EXT),
                           logger=None, write_logfile=False)
 
