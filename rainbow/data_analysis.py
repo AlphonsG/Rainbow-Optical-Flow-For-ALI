@@ -18,8 +18,6 @@ import numpy as np
 
 import scipy.stats
 
-from traitlets.config import Config as NotebookHTMLConfig
-
 SENTINEL = 'STOP'
 
 
