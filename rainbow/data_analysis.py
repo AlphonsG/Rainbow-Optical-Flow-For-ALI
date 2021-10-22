@@ -57,18 +57,9 @@ def gen_report(output_dir, report_path, html=True):
 
 def save_html(output_dir, gend_report_path):
     with open(gend_report_path) as f:
-        c = NotebookHTMLConfig()
-        # Configure our tag removal
-        c.TagRemovePreprocessor.enabled = True
-        c.TagRemovePreprocessor.remove_cell_tags = ('remove_cell',)
-        c.TagRemovePreprocessor.remove_all_outputs_tags = ('remove_output',)
-        c.TagRemovePreprocessor.remove_input_tags = ('remove_input',)
-
-        # Configure and run out exporter
-        c.HTMLExporter.preprocessors = ['nbconvert.preprocessors.'
-                                        'TagRemovePreprocessor']
         nb = nbformat.read(f, as_version=4)
-        exporter = nbconvert.HTMLExporter(config=c)
+        exporter = nbconvert.HTMLExporter()
+        exporter.exclude_input = True
         body, resources = exporter.from_notebook_node(nb)
         file_writer = nbconvert.writers.FilesWriter()
         file_writer.write(output=body, resources=resources,
