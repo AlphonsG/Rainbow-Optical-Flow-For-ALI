@@ -2,15 +2,16 @@ import os
 from multiprocessing import Process, Queue
 from pathlib import Path
 
+import rainbow
 from rainbow.data_analysis import analyze_data
-from rainbow.optical_flow.optical_flow import compute_opt_flow
+from rainbow.optical_flow.optical_flow import compute_optical_flow
 from rainbow.util import load_nd2_imgs, load_std_imgs
 
 SENTINEL = 'STOP'
 
 
 def process_files(root_dir, config, num_wrkrs, subdirs, overwrite_flow):
-    queue = Queue(config['q_sz'])
+    queue = Queue(config['queue_size'])
     if num_wrkrs != 1:
         wrkrs = initialize_workers(num_wrkrs, config, queue)
 
@@ -18,7 +19,7 @@ def process_files(root_dir, config, num_wrkrs, subdirs, overwrite_flow):
         dirs = [os.path.join(root_dir, curr_dir) for curr_dir in
                 next(os.walk(root_dir))[1]] if subdirs else [root_dir]
     except StopIteration:
-        print(f'Root directory {root_dir} empty.')
+        print(f'Root directory ({root_dir}) is empty.')
 
     for curr_dir in dirs:
         try:
@@ -33,14 +34,18 @@ def process_files(root_dir, config, num_wrkrs, subdirs, overwrite_flow):
                     config['nd2'], config['mpp']))
             if len(imgs[0]) == 0:
                 continue
-            for img_ser in imgs:
-                output_dir = compute_opt_flow(img_ser, config,
-                                              save_raw_imgs=True,
-                                              overwrite_flow=overwrite_flow)
+            for img_seq in imgs:
+                output_dir = get_output_dir(img_seq, config)
+                if not skip_opt_flow(output_dir, overwrite_flow):
+                    compute_optical_flow(img_seq, output_dir, config[
+                        'opt_flow_model'], config[config['opt_flow_model']],
+                        overwrite_flow=overwrite_flow)
+
                 queue.put(output_dir)
                 if num_wrkrs == 1:
                     queue.put(SENTINEL)
                     analyze_data(queue, config)
+                    queue.get()
         if not subdirs:
             break
 
@@ -64,3 +69,24 @@ def initialize_workers(num_wrkrs, config, queue):
         wrkr.start()
 
     return wrkrs
+
+
+def get_output_dir(imgs, config):
+    name, ext = os.path.splitext(imgs[0].metadata['img_name'])
+    ser = (' Series {})'.format(imgs[0].metadata[config['nd2'][
+           'naming_axs'][0]]) if ext == '.nd2' else '')
+    output_dir = '({}) {}{}_etc'.format(ext.replace('.', ''), name,
+                                        ser)
+    output_dir = os.path.join(imgs[0].metadata['img_ser_md']['dir'],
+                              output_dir)
+
+    return output_dir
+
+
+def skip_opt_flow(output_dir, overwrite_flow):
+    if not overwrite_flow and os.path.isdir(output_dir) and (
+            rainbow.OPTICAL_FLOW_FILENAME in [Path(f).stem for f in next(
+                os.walk(output_dir))[2]]):
+        return True
+    else:
+        return False

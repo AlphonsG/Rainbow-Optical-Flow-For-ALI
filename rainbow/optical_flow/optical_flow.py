@@ -1,5 +1,4 @@
 import os
-from pathlib import Path
 
 import cv2
 
@@ -13,39 +12,23 @@ from rainbow.util import (cleanup_dir, save_img_ser, save_img_ser_metadata,
 OPTICAL_FLOW_FILENAME = 'optical_flow'
 
 
-def compute_opt_flow(imgs, config, reuse_mdl=True, save_raw_imgs=False,
-                     overwrite_flow=False):
+def compute_optical_flow(imgs, output_dir, model_name, model_config,
+                         reuse_model=True, save_raw_imgs=True,
+                         overwrite_flow=False):
     mdl_fcty = ModelFactory()
-    model = mdl_fcty.get_model(config['opt_flow_model'],
-                               config[config['opt_flow_model']], reuse_mdl)
-    name, ext = os.path.splitext(imgs[0].metadata['img_name'])
-    ser = (' Series {})'.format(imgs[0].metadata[config['nd2'][
-           'naming_axs'][0]]) if ext == '.nd2' else '')
-    output_dir = '({}) {}{}_etc'.format(ext.replace('.', ''), name,
-                                        ser)
-    output_dir = os.path.join(imgs[0].metadata['img_ser_md']['dir'],
-                              output_dir)
-
-    if not overwrite_flow and os.path.isdir(output_dir) and (
-            rainbow.OPTICAL_FLOW_FILENAME in
-            [Path(f).stem for f in next(os.walk(output_dir))[2]]):
-        return output_dir
-
+    model = mdl_fcty.get_model(model_name, model_config, reuse_model)
     preds = model.predict(imgs)
+
     if not cleanup_dir(output_dir):
         return
     os.mkdir(output_dir)
-
     save_optical_flow(preds, output_dir)
 
     if save_raw_imgs:
-        raw_imgs_dir = os.path.join(output_dir,
-                                    rainbow.RAW_IMGS_DIR_NAME)
+        raw_imgs_dir = os.path.join(output_dir, rainbow.RAW_IMGS_DIR_NAME)
         os.mkdir(raw_imgs_dir)
         save_img_ser(imgs, raw_imgs_dir)
         save_img_ser_metadata(imgs, output_dir)
-
-    return output_dir
 
 
 def flow_to_img(flow, normalize=True, info=None, flow_mag_max=None):

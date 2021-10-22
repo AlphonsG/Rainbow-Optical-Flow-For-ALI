@@ -46,7 +46,7 @@ def process_args():
     return args
 
 
-def main(args=None):
+def main():
     args = process_args()  # check checkpoint path
     assert os.path.isdir(args.root_dir), ('Invalid root directory path '
                                           'provided.')
@@ -69,4 +69,4 @@ def main(args=None):
 
 if __name__ == "__main__":
     __spec__ = None  # pdb multiprocessing support
-    sys.exit(main())
+    main()
