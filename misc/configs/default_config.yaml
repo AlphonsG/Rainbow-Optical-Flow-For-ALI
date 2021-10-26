@@ -1,24 +1,31 @@
-report_path: ./misc/notebooks/report.ipynb
+# generate report (default = report.ipynb)
+report_path: report.ipynb
 
+# .nd2 file configuration
 nd2:
+  # ordered nd2 axes to iterate over when loading images from .nd2 file
   iter_axs:
     - 'z'
     - 'm'
     - 't'
+  # axes to bundle when loading images from .nd2 file
   bdl_axs:
     - 'y'
     - 'x'
+  # axis to to use when naming images loaded from .nd2 file
   naming_axs:
   - 'm'
 
+# default micrometres per pixel value of image sequences
 mpp: 0.31302569743655434
 
-queue_size: 200
-
+# model to use when computing optical flow
 opt_flow_model: gma
 
+# Learning to Estimate Hidden Motions with Global Motion Aggregation
+# https://github.com/zacjiang/GMA
 gma:
-  # restore checkpoint
+  # restore checkpoint (default = gma-sintel.pth)
   model: gma-sintel.pth
   # define model name
   model_name: GMA
