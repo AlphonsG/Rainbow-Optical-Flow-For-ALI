@@ -63,7 +63,11 @@ def load_nd2_imgs(nd2, axs_config, mpp=None):
 
 
 def load_std_imgs(input_dir, mpp=None):
+    try:
     _, _, files = next(os.walk(input_dir))
+    except StopIteration:
+        return []
+
     files = natsorted([os.path.join(input_dir, f) for f in files])
     imgs = []
     for f in files:
