@@ -73,10 +73,9 @@ def initialize_workers(num_wrkrs, config, queue):
 
 def get_output_dir(imgs, config):
     name, ext = os.path.splitext(imgs[0].metadata['img_name'])
-    ser = (' Series {})'.format(imgs[0].metadata[config['nd2'][
+    ser = ('_Series_{})'.format(imgs[0].metadata[config['nd2'][
            'naming_axs'][0]]) if ext == '.nd2' else '')
-    output_dir = '({}) {}{}_etc'.format(ext.replace('.', ''), name,
-                                        ser)
+    output_dir = '({})_{}{}_etc'.format(ext.replace('.', ''), name, ser)
     output_dir = os.path.join(imgs[0].metadata['img_ser_md']['dir'],
                               output_dir)
 
