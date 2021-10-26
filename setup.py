@@ -17,7 +17,8 @@ REQUIRED_PACKAGES = [
     'scikit-image',
     'tqdm',
     'ipympl',
-    'einops'
+    'einops',
+    'pytest',
     'Gooey',
     'imutils'
 ]
