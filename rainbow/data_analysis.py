@@ -2,7 +2,6 @@ import csv
 import math
 import os
 import warnings
-
 from pathlib import Path
 
 import cv2
@@ -46,8 +45,7 @@ def gen_report(output_dir, report_path, html=True):
                    'for error.')
             warnings.warn(msg, UserWarning)
         finally:
-            with open(gend_report_path, 'w',
-                      encoding='utf-8') as f:
+            with open(gend_report_path, 'w', encoding='utf-8') as f:
                 nbformat.write(nb, f)
             if html:
                 save_html(output_dir, gend_report_path)
@@ -152,5 +150,5 @@ def save_stats(stats, csv_path, unit):
             for s in stats:
                 writer.writerow(list(s.values()))
     except (OSError, csv.Error, ValueError) as e:
-        msg = 'Could not create stats file. Message: {}'.format(str(e))
+        msg = 'Could not create stats file. Message: {}.'.format(str(e))
         warnings.warn(msg, UserWarning)
