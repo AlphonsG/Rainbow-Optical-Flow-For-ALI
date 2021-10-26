@@ -22,6 +22,19 @@ NOTEBOOK_DIR = 'misc/notebooks'
 
 
 def analyze_data(queue, config):
+    """Performs data analysis.
+
+    Receives directories from worker processes via queue and generates an
+    analysis report of data stored in those directories.
+
+    Args:
+        queue (multiprocessing.Queue): The queue that will be used to receive
+            directory paths from workers.
+        config (string): The path to a .yaml configuration file.
+
+    Returns:
+        int: 0 when data analysis has successfully finished.
+    """
     while True:
         output_dir = queue.get()
         if output_dir == SENTINEL:
@@ -33,6 +46,16 @@ def analyze_data(queue, config):
 
 
 def gen_report(output_dir, report_path, html=True):
+    """Generate a report.
+
+    Execute a jupyter notebook in output_dir.
+
+    Args:
+        output_dir (string): The path to the output directory.
+        report_path (string): The path to the jupyter notebook.
+        html (bool, optional): If True, will also save executed jupyter
+            notebook as a html file in output_dir. Defaults to True.
+    """
     if not os.path.isfile(report_path):
         report_path = os.path.join(os.path.abspath(os.path.dirname(
             __file__)), '..', NOTEBOOK_DIR, report_path)
@@ -59,6 +82,12 @@ def gen_report(output_dir, report_path, html=True):
 
 
 def save_html(output_dir, gend_report_path):
+    """Saves jupyter notebook as a html file in output_dir.
+
+    Args:
+        output_dir (string): The path to the output directory.
+        gend_report_path (string): The path to the jupyter notebook.
+    """
     with open(gend_report_path) as f:
         nb = nbformat.read(f, as_version=4)
         exporter = nbconvert.HTMLExporter()
@@ -71,6 +100,11 @@ def save_html(output_dir, gend_report_path):
 
 
 def mag_scatter(mags):
+    """Creates a magnitude scatter plot.
+
+    Args:
+        mags (list): A list of floats representing vector magnitudes.
+    """
     times = list(range(1, len(mags) + 1))
     plt.figure()
     plt.scatter(times, mags)
@@ -81,6 +115,11 @@ def mag_scatter(mags):
 
 
 def dirn_scatter(dirns):
+    """Creates a direction scatter plot.
+
+    Args:
+        dirns (list): A list of floats representing vector directions.
+    """
     times = list(range(1, len(dirns) + 1))
     plt.figure()
     plt.scatter(times, dirns)
@@ -91,6 +130,19 @@ def dirn_scatter(dirns):
 
 
 def save_heatmaps(preds, output_dir, step=0, dpi=1000):
+    """Saves heatmaps.
+
+    Writes images visualizing the magnitude of optical flow of an image
+    sequence to output_dir.
+
+    Args:
+        preds (list): The optical flow across an image sequence.
+        output_dir (string): The path to the output directory.
+        step (int, optional): The amount of infomation discarded when
+            visualizing heatmaps. Defaults to 0.
+        dpi (int, optional): The dots per inch of the saved heatmap images.
+            Defaults to 1000.
+    """
     for i, pred in enumerate(preds):
         plt.xticks([])
         plt.yticks([])
@@ -109,6 +161,19 @@ def save_heatmaps(preds, output_dir, step=0, dpi=1000):
 
 
 def save_quiver_plots(preds, output_dir, step=70, dpi=1000):
+    """Saves quiver plots.
+
+    Writes images visualizing the direction of optical flow of an image
+    sequence to output_dir.
+
+    Args:
+        preds (list): The optical flow across an image sequence.
+        output_dir (string): The path to the output directory.
+        step (int, optional): The pixel seperation of the vectors visualized in
+            the quiver plots.
+        dpi (int, optional): The dots per inch of the saved quiver plot images.
+            Defaults to 1000.
+    """
     for i, pred in enumerate(preds):
         plt.xticks([])
         plt.yticks([])
@@ -125,6 +190,13 @@ def save_quiver_plots(preds, output_dir, step=70, dpi=1000):
 
 
 def gen_base_metrics(data):
+    """Generates metrics for the optical flow data of an image sequence.
+
+    Args:
+        data (Defaultdict(list)): Contains an image sequence under the key
+            'raw_imgs' and the corresponding optical flow under the key
+            'preds'.
+    """
     for i, pred in enumerate(data['preds']):
         mag, dirn = cv2.cartToPolar(pred[..., 0].astype(float),
                                     pred[..., 1].astype(float),
@@ -138,6 +210,19 @@ def gen_base_metrics(data):
 
 
 def gen_stats(metric, i):
+    """Calculates statistics for a given metric.
+
+    The statistics (e.g. mean, variance, etc.) are for a given metric in a
+    frame of an image sequence.
+
+    Args:
+        metric (list): A list of values for the given metric.
+        i (int): The corresponding frame number for the values of the given
+            metric.
+
+    Returns:
+        dict: The statistics for the given metric.
+    """
     stats = scipy.stats.describe(metric, axis=None)
     stats = {'frame': i, 'min': stats[1][0],
              'max': stats[1][1], 'mean': stats[2],
@@ -147,6 +232,16 @@ def gen_stats(metric, i):
 
 
 def save_stats(stats, csv_path, unit):
+    """Saves statistics to a csv file.
+
+    The statistics are for a given metric in one or more frames of an image
+    sequence.
+
+    Args:
+        stats (list): A list of statistics.
+        csv_path (string): The path of the csv file to create.
+        unit (string): The unit of measurement for the given metric.
+    """
     try:
         with open(csv_path, 'w', newline='') as csv_file:
             fields = ['frame', 'min', 'max', 'mean', 'std', 'var']  # outside?

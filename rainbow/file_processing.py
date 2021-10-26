@@ -13,7 +13,25 @@ SENTINEL = 'STOP'
 
 
 def process_files(root_dir, config, num_wrkrs, subdirs, overwrite_flow):
-    queue = Queue(config['queue_size'])
+    """Processes files located within root_dir.
+
+    Finds valid files (image sequences) within root_dir from which to compute
+    the optical flow from and perform data analysis.
+
+    Args:
+        root_dir (string): The path to an existing directory containing image
+            sequences as .nd2 files or 2 or more image files in common formats
+            (.png, .tiff, etc).
+        config (string): The path to a .yaml configuration file.
+        num_wrkrs (int): The number of workers to use for parallel analysis.
+            If set to None will use the same number of workers as CPU core
+            count.
+        subdirs (bool): If True, will look for image sequences in root_dir
+            subfolders instead of top level directory.
+        overwrite_flow (bool): If True, will compute optical flow
+            even if a flow file already exists for an image sequence.
+    """
+    queue = Queue()
     if num_wrkrs != 1:
         wrkrs = initialize_workers(num_wrkrs, config, queue)
 
@@ -73,6 +91,20 @@ def process_files(root_dir, config, num_wrkrs, subdirs, overwrite_flow):
 
 
 def initialize_workers(num_wrkrs, config, queue):
+    """Initializes workers.
+
+    Creates and starts workers (subprocesses) that will perfrom data analysis.
+
+    Args:
+        num_wrkrs (int): The number of workers to create. If set to None will
+        create the same number of workers as CPU core count.
+        config (string): The path to a .yaml configuration file.
+        queue (multiprocessing.Queue): The queue that will be used to
+            communicate with the workers.
+
+    Returns:
+        list: A list of initalized workers as multiprocessing.Process objects.
+    """
     if num_wrkrs is None:
         num_wrkrs = os.cpu_count() if os.cpu_count() is not None else 1
 
@@ -89,6 +121,19 @@ def initialize_workers(num_wrkrs, config, queue):
 
 
 def get_output_dir(imgs, config):
+    """Determines the corresponding output directory for an image sequence.
+
+    The automatically named output directory will be used to store the
+    data generated from an image sequence and is not created if
+    nonexisting.
+
+    Args:
+        imgs (list): An image sequence as a list of PIMS Frame arrays.
+        config (string): The path to a .yaml configuration file.
+
+    Returns:
+        string: The path to the output directory.
+    """
     name, ext = os.path.splitext(imgs[0].metadata['img_name'])
     ser = ('_Series_{})'.format(imgs[0].metadata[config['nd2'][
            'naming_axs'][0]]) if ext == '.nd2' else '')
@@ -100,9 +145,21 @@ def get_output_dir(imgs, config):
 
 
 def skip_opt_flow(output_dir, overwrite_flow):
+    """Determines whether optical flow computation should be skipped.
+
+    Skips computation iff an optical flow file already exists in output_dir
+    and optical flow is not set to be overwritten.
+
+    Args:
+        output_dir (string): The path to an existing output directory.
+        overwrite_flow (bool): If True, will ignore optical flow file if
+            already existing in output_dir.
+
+    Returns:
+        bool: Whether optical flow computation should be skipped.
+    """
     if not overwrite_flow and os.path.isdir(output_dir) and (
-            rainbow.OPTICAL_FLOW_FILENAME in [Path(f).stem for f in next(
-                os.walk(output_dir))[2]]):
+            rainbow.OPTICAL_FLOW_FILENAME in next(os.walk(output_dir))[2]):
         return True
     else:
         return False
