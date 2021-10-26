@@ -1,44 +1,30 @@
 import os
-from argparse import ArgumentParser
+
+from gooey import Gooey, GooeyParser
 
 from rainbow.file_processing import process_files
 
 import yaml
 
 
+@Gooey()
 def process_args():
-    parser = ArgumentParser(description="""
-                            RAINBOW: Automated air liquid
-                            interface cell culture analysis using
-                            deep optical flow. This tool will process
-                            time lapse image sequences from .nd2 files
-                            or standard image files such as .png
-                            files. Rainbow processes all
-                            compatible files in the provided root
-                            directory. The results of
-                            the analysis are placed in a
-                            folder that is created in the
-                            same directory as the analyzed
-                            image sequence. The results folder
-                            name begins with the type of image
-                            sequence analyzed in brackets and is
-                            named to easily identify the original
-                            sequence. Rainbow can utilize a GPU
-                            to compute optical flow and can
-                            analyze multiple folders in parallel.""")
-    parser.add_argument('root_dir', type=str, help='path to root directory '
-                        'to begin searching for compatible files to process '
-                        'in')
-    parser.add_argument('config', type=str, help='path to YAML configuration '
-                        'file')
-    parser.add_argument('--num-workers', type=int, help='maximum '
+    parser = GooeyParser(description='Automated air liquid interface cell '
+                         'culture analysis using deep optical flow.')
+    parser.add_argument('root_dir', type=str, help='Path to root directory '
+                        'to begin searching for image sequences to process '
+                        'in', widget='DirChooser')
+    parser.add_argument('config', type=str, help='Path to YAML configuration '
+                        'file', widget='FileChooser')
+    parser.add_argument('--num-workers', type=int, help='Maximum '
                         'number of workers to use for parallel analysis '
-                        '(default equals CPU core count)')
-    parser.add_argument('--subdirs', help='process files in root directory '
+                        '(default number equals CPU core count)',
+                        widget='IntegerField', gooey_options={'min': 1})
+    parser.add_argument('--subdirs', help='Process files in root directory '
                         'subfolders instead', action='store_true')
     parser.add_argument('--overwrite-flow', action='store_true',
-                        help='recompute optical flow even if preexisting '
-                             'optical flow file exists for an image series')
+                        help='Recompute optical flow even if preexisting '
+                             'optical flow file is found for an image series')
     args = parser.parse_args()
 
     return args
