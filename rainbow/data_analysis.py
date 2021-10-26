@@ -18,6 +18,7 @@ import numpy as np
 import scipy.stats
 
 SENTINEL = 'STOP'
+NOTEBOOK_DIR = 'misc/notebooks'
 
 
 def analyze_data(queue, config):
@@ -32,6 +33,12 @@ def analyze_data(queue, config):
 
 
 def gen_report(output_dir, report_path, html=True):
+    if not os.path.isfile(report_path):
+        report_path = os.path.join(os.path.abspath(os.path.dirname(
+            __file__)), '..', NOTEBOOK_DIR, report_path)
+        if not os.path.isfile(report_path):
+            return
+
     with open(report_path) as f:
         nb = nbformat.read(f, as_version=4)
         ep = ExecutePreprocessor(timeout=600, kernel_name='python3')
