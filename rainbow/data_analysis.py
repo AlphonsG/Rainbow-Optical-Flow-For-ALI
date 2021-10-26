@@ -83,7 +83,7 @@ def dirn_scatter(dirns):
     plt.ylim(0, max(dirns) * 1.5)
 
 
-def save_heatmaps(preds, output_dir, step=0, dpi=1000, fps=5):
+def save_heatmaps(preds, output_dir, step=0, dpi=1000):
     for i, pred in enumerate(preds):
         plt.xticks([])
         plt.yticks([])
@@ -101,7 +101,7 @@ def save_heatmaps(preds, output_dir, step=0, dpi=1000, fps=5):
         plt.close()
 
 
-def save_quiver_plots(preds, output_dir, step=70, dpi=1000, fps=5):
+def save_quiver_plots(preds, output_dir, step=70, dpi=1000):
     for i, pred in enumerate(preds):
         plt.xticks([])
         plt.yticks([])
