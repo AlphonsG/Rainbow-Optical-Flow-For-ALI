@@ -7,6 +7,8 @@ from rainbow.data_analysis import analyze_data
 from rainbow.optical_flow.optical_flow import compute_optical_flow
 from rainbow.util import load_nd2_imgs, load_std_imgs
 
+from tqdm import tqdm
+
 SENTINEL = 'STOP'
 
 
@@ -21,6 +23,7 @@ def process_files(root_dir, config, num_wrkrs, subdirs, overwrite_flow):
     except StopIteration:
         print(f'Root directory ({root_dir}) is empty.')
 
+    pbar = tqdm(total=1)
     for curr_dir in dirs:
         try:
             files = next(os.walk(curr_dir))[2]
@@ -34,7 +37,13 @@ def process_files(root_dir, config, num_wrkrs, subdirs, overwrite_flow):
                     config['nd2'], config['mpp']))
             if len(imgs[0]) == 0:
                 continue
+
+            pbar.total += len(imgs)
+            pbar.refresh()
             for img_seq in imgs:
+                if len(img_seq) < 2:
+                    pbar.update()
+                    continue
                 output_dir = get_output_dir(img_seq, config)
                 if not skip_opt_flow(output_dir, overwrite_flow):
                     compute_optical_flow(img_seq, output_dir, config[
@@ -46,6 +55,9 @@ def process_files(root_dir, config, num_wrkrs, subdirs, overwrite_flow):
                     queue.put(SENTINEL)
                     analyze_data(queue, config)
                     queue.get()
+
+                pbar.update()
+
         if not subdirs:
             break
 
@@ -53,6 +65,11 @@ def process_files(root_dir, config, num_wrkrs, subdirs, overwrite_flow):
         queue.put(SENTINEL)
         for wrkr in wrkrs:
             wrkr.join()
+        pbar.update()
+    else:
+        pbar.update()
+
+    pbar.close()
 
 
 def initialize_workers(num_wrkrs, config, queue):
