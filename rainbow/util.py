@@ -123,6 +123,9 @@ def save_video(input_dir, output_path, fps=5):
                                imgs], fps=fps)
     video.write_videofile(os.path.join(output_path + VID_FILE_EXT),
                           logger=None, write_logfile=False)
+    video.close()
+
+    return True
 
 
 def apply_metadata(img1, img2):
