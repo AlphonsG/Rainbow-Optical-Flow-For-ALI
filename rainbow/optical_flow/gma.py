@@ -2,20 +2,20 @@ import os
 import sys
 from argparse import Namespace
 
+import imutils
+
 from rainbow.optical_flow.base_model import BaseModel
 
 import torch
+
+MIN_DIMS = (284, 121)
 
 
 class GMA(BaseModel):
     __instance__ = None
 
     def __init__(self, model_cfg, reuse_model):
-        if reuse_model and GMA.__instance__ is None:
-            GMA.__instance__ = self
-        else:
-            raise ValueError('Cannot create multiple GMA instances.')
-
+        """See base class."""
         gma_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)),
                                'third_party', 'gma')
         sys.path.insert(1, os.path.join(gma_dir, 'core'))
@@ -40,23 +40,41 @@ class GMA(BaseModel):
         model.eval()
         self.model = model
         self.model_cfg = model_cfg
-        GMA.__an_isce__ = self
+        GMA.__instance__ = self
 
     @staticmethod
     def get_instance(model_cfg, reuse_model):
-        if GMA.__instance__ is None:
+        """See base class."""
+
+        if GMA.__instance__ is not None:
+            if not reuse_model:
+                raise ValueError('Cannot create multiple GMA instances.')
+        else:
             GMA(model_cfg, reuse_model)
+
         return GMA.__instance__
 
     def predict(self, imgs):
+        imgs = imgs.copy()
+        # Resize images to minimum dimensions, if necessary.
+        for i, img in enumerate(imgs):
+            for j, kv in zip([0, 1], [{'height': MIN_DIMS[0]},
+                                      {'width': MIN_DIMS[1]}]):
+                if img.shape[j] < MIN_DIMS[j]:
+                    img = imutils.resize(img, **kv)
+            imgs[i] = img
+
         imgs = [torch.from_numpy(img).permute(2, 0, 1).float()[None].to(
                 self.model_cfg['device']) for img in imgs]
         imgs = self.get_img_pairs(imgs)
+
+        # Pad images, if necessary.
+        padder = self.InputPadder(imgs[0][0].shape)
+        imgs = [(padder.pad(img1, img2)) for img1, img2 in imgs]
+
         preds = []
         with torch.no_grad():
             for img1, img2 in imgs:
-                padder = self.InputPadder(img1.shape)
-                img1, img2 = padder.pad(img1, img2)
                 _, flow = self.model(img1, img2, iters=12, test_mode=True)
                 preds.append(flow[0].permute(1, 2, 0).cpu().numpy())
 

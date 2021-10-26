@@ -16,6 +16,7 @@ REQUIRED_PACKAGES = [
     'tqdm',
     'ipympl',
     'einops'
+    'imutils'
 ]
 
 setup(
