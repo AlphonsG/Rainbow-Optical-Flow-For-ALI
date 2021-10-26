@@ -165,5 +165,6 @@ def video_reshape(vid_path, set_wdh=None):
     hgt, wdh, _ = cap.read()[1].shape
     dsp_wdh = set_wdh if set_wdh is not None else wdh
     dsp_hgt = dsp_wdh * (hgt / wdh) if wdh is not None else hgt
+    cap.release()
 
-    return dsp_wdh, dsp_hgt
+    return round(dsp_wdh), round(dsp_hgt)
