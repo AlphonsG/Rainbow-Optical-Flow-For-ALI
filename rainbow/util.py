@@ -84,11 +84,11 @@ def load_std_imgs(input_dir, mpp=None):
     return imgs
 
 
-def save_img_ser(imgs, output_dir, auto_name=True):
+def save_img_ser(imgs, output_dir, use_metadata_name=True):
     for i, img in enumerate(imgs):
         path = (os.path.join(output_dir, img.metadata['img_name']) if
-                auto_name else os.path.join(output_dir, 'Image_{}.png'.format(
-                    i)))
+                use_metadata_name else os.path.join(output_dir,
+                'Image_{}.png'.format(i)))
         cv2.imwrite(path, img)
 
 
