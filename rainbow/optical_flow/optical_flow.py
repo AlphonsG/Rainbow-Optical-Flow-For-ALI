@@ -19,12 +19,14 @@ def compute_optical_flow(imgs, output_dir, model_name, model_config,
     model = mdl_fcty.get_model(model_name, model_config, reuse_model)
     preds = model.predict(imgs)
 
+    if not (os.path.isfile(os.path.join(output_dir,
+            OPTICAL_FLOW_FILENAME)) and not overwrite_flow):
     if not cleanup_dir(output_dir):
         return
     os.mkdir(output_dir)
     save_optical_flow(preds, output_dir)
 
-    if save_raw_imgs:
+        if save_raw_imgs:  # TODO remove
         raw_imgs_dir = os.path.join(output_dir, rainbow.RAW_IMGS_DIR_NAME)
         os.mkdir(raw_imgs_dir)
         save_img_ser(imgs, raw_imgs_dir)
