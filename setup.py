@@ -1,7 +1,8 @@
 import os
 import shutil
-from setuptools.command.develop import develop
+
 from setuptools import find_packages, setup
+from setuptools.command.develop import develop
 from setuptools.command.install import install
 
 REQUIRED_PACKAGES = [
@@ -12,7 +13,7 @@ REQUIRED_PACKAGES = [
     'opencv-python',
     'pandas',
     'PIMS',
-    'pims-nd2==1.0',
+    'nd2reader',
     'PyYAML',
     'scikit-image',
     'tqdm',

@@ -16,9 +16,9 @@ from tests import IMG_SER_DIR, ND2_PATH
 
 @pytest.fixture
 def nd2_config():
-    return {'nd2': {'iter_axs': ['z', 'm', 't'],
+    return {'nd2': {'iter_axs': ['v', 't'],
                     'bdl_axs': ['y', 'x'],
-                    'naming_axs': 'm'
+                    'naming_axs': 'v'
                     }
             }
 
@@ -32,9 +32,9 @@ def img_dir(tmpdir):
 @pytest.fixture
 def config():
     return {'report_path': 'report.ipynb',
-            'nd2': {'iter_axs': ['z', 'm', 't'],
+            'nd2': {'iter_axs': ['v', 't'],
                     'bdl_axs': ['y', 'x'],
-                    'naming_axs': 'm'
+                    'naming_axs': 'v'
                     },
             'mpp': 0.31302569743655434,
             'opt_flow_model': 'gma',

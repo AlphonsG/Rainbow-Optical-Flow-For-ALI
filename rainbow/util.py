@@ -11,9 +11,11 @@ from moviepy.editor import ImageSequenceClip
 
 from natsort import natsorted
 
+from nd2reader import ND2Reader
+
 import numpy as np
 
-from pims import Frame, ND2Reader_SDK as ND2_Reader
+from pims import Frame
 
 import rainbow
 
@@ -34,17 +36,15 @@ def load_nd2_imgs(nd2, axs_config, mpp=None):  # mpp None?
     Returns:
         list: A list of image sequences loaded from the .nd2 file.
     """
-    with warnings.catch_warnings():
-        warnings.simplefilter('ignore')
-        frms = ND2_Reader(nd2)
-
+    frms = ND2Reader(nd2)
     avl_axs = list(frms.sizes.keys())
     iter_axs = [ax for ax in axs_config['iter_axs'] if ax in avl_axs]
     bdl_axs = [ax for ax in axs_config['bdl_axs'] if ax in avl_axs]
     if len(iter_axs) == 0 or len(bdl_axs) == 0:
         return []
     frms.iter_axes, frms.bundle_axes = ''.join(iter_axs), ''.join(bdl_axs)
-    min_px, max_px, ser_len = 0, frms.max_value, frms.sizes[iter_axs[-1]]
+    min_px, max_px, ser_len = (0, np.array(list(frms)).max(),
+                               frms.sizes[iter_axs[-1]])
     imgs, curr_img_ser = [], []
     for i, frm in enumerate(frms):
         img = (frm.astype(float) - min_px) * 255.0 / (max_px - min_px)
@@ -55,20 +55,21 @@ def load_nd2_imgs(nd2, axs_config, mpp=None):  # mpp None?
         frame.metadata = frm.metadata
         frame.metadata['type'] = '.nd2'
         frame.metadata['path'] = nd2
-        frame.metadata['img_name'] = ('Image_{}.png'.format(frm.metadata[
-                                      axs_config['iter_axs'][-1]]))
-        if 'mpp' not in frame.metadata:
+        frame.metadata['img_name'] = 'Image_{}.png'.format(
+            frm.metadata['coords'][axs_config['iter_axs'][-1]])
+        try:
+            frame.metadata['mpp'] = frame.metadata['pixel_microns']
+        except KeyError:
             frame.metadata['mpp'] = mpp
 
-        if i == 0 or i % ser_len != 0:
-            curr_img_ser.append(frame)
-        else:
+        curr_img_ser.append(frame)
+        if (i + 1) % ser_len == 0:
             curr_img_ser[0].metadata['img_ser_md'] = frms.metadata
             curr_img_ser[0].metadata['img_ser_md']['type'] = '.nd2'
             curr_img_ser[0].metadata['img_ser_md']['dir'] = os.path.dirname(
                 nd2)
             imgs.append(curr_img_ser)
-            curr_img_ser = [frame]
+            curr_img_ser = []
 
     frms.close()
 

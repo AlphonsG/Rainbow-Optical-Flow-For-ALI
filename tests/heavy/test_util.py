@@ -14,9 +14,9 @@ from tests import IMG_SER_DIR, ND2_PATH
 
 @pytest.fixture
 def axs_config():
-    return {'iter_axs': ['z', 'm', 't'],
+    return {'iter_axs': ['v', 't'],
             'bdl_axs': ['y', 'x'],
-            'naming_axs': 'm'
+            'naming_axs': 'v'
             }
 
 
@@ -33,7 +33,7 @@ def test_load_std_imgs(tmpdir):
 
 def test_load_nd2_imgs(axs_config):
     imgs = load_nd2_imgs(ND2_PATH, axs_config)
-    assert len(imgs) != 0
+    assert len(imgs) != 0  # TODO specfic
     assert len(imgs[0]) != 0
     assert imgs[3][0].shape == (1024, 1280, 3)
     assert len(imgs[0][0].metadata) != 0

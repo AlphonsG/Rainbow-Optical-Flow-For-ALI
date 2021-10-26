@@ -5,8 +5,7 @@ report_path: report.ipynb
 nd2:
   # ordered nd2 axes to iterate over when loading images from .nd2 file
   iter_axs:
-    - 'z'
-    - 'm'
+    - 'v'
     - 't'
   # axes to bundle when loading images from .nd2 file
   bdl_axs:
@@ -14,7 +13,7 @@ nd2:
     - 'x'
   # axis to to use when naming images loaded from .nd2 file
   naming_axs:
-  - 'm'
+  - 'v'
 
 # default micrometres per pixel value of image sequences
 mpp: 0.31302569743655434
