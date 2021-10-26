@@ -1,7 +1,5 @@
 import os
-import sys
 from argparse import ArgumentParser
-from time import time
 
 from rainbow.file_processing import process_files
 
@@ -57,12 +55,8 @@ def main():
     with open(args.config) as f:
         config = yaml.safe_load(f)
 
-    start = time()
     process_files(args.root_dir, config, args.num_workers, args.subdirs,
                   args.overwrite_flow)
-    end = time()
-    runtime = int(end - start)
-    print('Finished in {} seconds!'.format(runtime))
 
     return 0
 
