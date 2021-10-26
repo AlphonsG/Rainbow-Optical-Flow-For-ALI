@@ -44,7 +44,7 @@ def load_nd2_imgs(nd2, axs_config, mpp=None):
         frame.metadata['path'] = nd2
         frame.metadata['img_name'] = ('Image_{}.png'.format(frm.metadata[
                                       axs_config['iter_axs'][-1]]))
-        if 'mpp' not in frame.metdata:
+        if 'mpp' not in frame.metadata:
             frame.metadata['mpp'] = mpp
 
         if i == 0 or i % ser_len != 0:
@@ -52,8 +52,8 @@ def load_nd2_imgs(nd2, axs_config, mpp=None):
         else:
             curr_img_ser[0].metadata['img_ser_md'] = frms.metadata
             curr_img_ser[0].metadata['img_ser_md']['type'] = '.nd2'
-            curr_img_ser[0].metadata['img_ser_md']['dir'] = (
-                os.path.dirname(nd2))
+            curr_img_ser[0].metadata['img_ser_md']['dir'] = os.path.dirname(
+                nd2)
             imgs.append(curr_img_ser)
             curr_img_ser = [frame]
 
