@@ -10,7 +10,7 @@ class BaseModel:
 
     @staticmethod
     @abstractmethod
-    def get_instance():
+    def get_instance(model_cfg, reuse_model):
         raise NotImplementedError
 
     @abstractmethod
