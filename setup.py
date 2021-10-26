@@ -14,6 +14,7 @@ REQUIRED_PACKAGES = [
     'tqdm',
     'ipympl',
     'einops'
+    'Gooey',
     'imutils'
 ]
 
