@@ -97,11 +97,9 @@ def cleanup_dir(output_dir):
         try:
             shutil.rmtree(output_dir)
         except OSError as e:
-            msg = ('Could not remove existing image directory ({}), '
-                   'skipping image writing, reason: {}'.format(output_dir,
-                                                               str(e)))
+            msg = (f'Could not remove existing directory ({output_dir}), '
+                   f'reason: {str(e)}.')
             warnings.warn(msg, UserWarning)
-
             return False
 
     return True
