@@ -9,6 +9,5 @@ class ModelFactory:
         elif model == 'gma':
             return GMA.get_instance(mdl_cfg, reuse_mdl)
         else:
-            msg = ('Chosen optical flow model ({}) not supported.'
-                   ).format(model)
+            msg = f'Chosen optical flow model ({model}) not supported.'
             raise ValueError(msg)
