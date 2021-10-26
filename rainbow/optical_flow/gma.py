@@ -12,6 +12,9 @@ MIN_DIMS = (284, 121)
 
 
 class GMA(BaseModel):
+    """Optical flow model from "Learning to Estimate Hidden Motions with Global
+    Motion Aggregation" by Jiang et. al (https://github.com/zacjiang/GMA).
+    """
     __instance__ = None
 
     def __init__(self, model_cfg, reuse_model):
@@ -45,7 +48,6 @@ class GMA(BaseModel):
     @staticmethod
     def get_instance(model_cfg, reuse_model):
         """See base class."""
-
         if GMA.__instance__ is not None:
             if not reuse_model:
                 raise ValueError('Cannot create multiple GMA instances.')
@@ -55,6 +57,7 @@ class GMA(BaseModel):
         return GMA.__instance__
 
     def predict(self, imgs):
+        """See base class."""
         imgs = imgs.copy()
         # Resize images to minimum dimensions, if necessary.
         for i, img in enumerate(imgs):

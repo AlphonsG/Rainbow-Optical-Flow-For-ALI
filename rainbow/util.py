@@ -20,7 +20,20 @@ import rainbow
 VID_FILE_EXT = '.mp4'
 
 
-def load_nd2_imgs(nd2, axs_config, mpp=None):
+def load_nd2_imgs(nd2, axs_config, mpp=None):  # mpp None?
+    """Loads image sequences from a .nd2 file.
+
+    Args:
+        nd2 (string): The path to a .nd2 file.
+        axs_config (dict): A dictionary with the key 'iter_axs', containing a
+            list of the ordered nd2 axes to iterate over, and the key
+            'bdl_axs', containing a list of the axes to bundle when iterating.
+        mpp (float, optional): The micrometres per pixel value of the
+            image sequences, if missing from the .nd2 file. Defaults to None.
+
+    Returns:
+        list: A list of image sequences loaded from the .nd2 file.
+    """
     with warnings.catch_warnings():
         warnings.simplefilter('ignore')
         frms = ND2_Reader(nd2)
@@ -63,8 +76,21 @@ def load_nd2_imgs(nd2, axs_config, mpp=None):
 
 
 def load_std_imgs(input_dir, mpp=None):
+    """Loads an image sequence from input_dir.
+
+    Assumes order of image sequence corresponds to naturally sorted image
+    filenames in input_dir.
+
+    Args:
+        input_dir (string): The path to the input directory.
+        mpp (float, optional): The micrometres per pixel value of the
+            image sequence. Defaults to None.
+
+    Returns:
+        list: A list of images.
+    """
     try:
-    _, _, files = next(os.walk(input_dir))
+        _, _, files = next(os.walk(input_dir))
     except StopIteration:
         return []
 
@@ -89,6 +115,17 @@ def load_std_imgs(input_dir, mpp=None):
 
 
 def save_img_ser(imgs, output_dir, use_metadata_name=True):
+    """Saves an image sequence to output_dir.
+
+    Saves images in .png format. Automatically names image files or uses
+    stored image names in image sequence metadata.
+
+    Args:
+        imgs (list): A list of images.
+        output_dir (string): The path to the output directory.
+        use_metadata_name (bool, optional): If True, names images using image
+            names in sequence metadata. Defaults to True.
+    """
     for i, img in enumerate(imgs):
         path = (os.path.join(output_dir, img.metadata['img_name']) if
                 use_metadata_name else os.path.join(output_dir,
@@ -97,6 +134,16 @@ def save_img_ser(imgs, output_dir, use_metadata_name=True):
 
 
 def cleanup_dir(output_dir):
+    """Cleans up output_dir.
+
+    If output_dir exists, attempts to remove it and its contents.
+
+    Args:
+        output_dir (string): The path to a directory.
+
+    Returns:
+        bool: If True, output_dir is guaranteed not to exist.
+    """
     if os.path.isdir(output_dir):
         try:
             shutil.rmtree(output_dir)
@@ -109,11 +156,37 @@ def cleanup_dir(output_dir):
     return True
 
 
-def comb_imgs(img1, img2, axis=1):
-    return np.concatenate((img1, img2), axis=axis)
+def comb_imgs(img1, img2):
+    """Horizontally concatenates two images.
+
+    img1 becomes the leftmost image, while img2 becomes the rightmost image.
+
+    Args:
+        img1 (numpy.array): An image.
+        img2 (numpy.array): An image.
+
+    Returns:
+        numpy.array: Image result of horizontally concatenating the two images.
+    """
+    return np.concatenate((img1, img2), axis=1)
 
 
 def save_video(input_dir, output_path, fps=5):
+    """Saves a video.
+
+    Saves a video generated from an image sequence, located in input_dir,
+    to output_path.
+
+    Args:
+        input_dir (string): The path to the input directory.
+        output_path (string): The path to write the generated video to
+            (includes video filename without extension).
+        fps (int, optional): The framerate of the generated video. Defaults
+            to 5.
+
+    Returns:
+        bool: If True, video was successfully saved.
+    """
     imgs = load_std_imgs(input_dir)
     if len(imgs) == 0:
         return False
@@ -129,6 +202,15 @@ def save_video(input_dir, output_path, fps=5):
 
 
 def apply_metadata(img1, img2):
+    """Sets img1's metadata to that of img2.
+
+    Args:
+        img1 (PIMS Frame): An image with a 'metadata' attribute.
+        img2 (numpy.array): An image.
+
+    Returns:
+        PIMS Frame: An image.
+    """
     img1 = Frame(img1)
     img1.metadata = img2.metadata
 
@@ -136,12 +218,26 @@ def apply_metadata(img1, img2):
 
 
 def save_optical_flow(preds, output_dir):
-    np.save(os.path.join(output_dir, f'{rainbow.OPTICAL_FLOW_FILENAME}.npy'),
-            np.array(preds),
-            allow_pickle=False)
+    """Saves optical flow predictions to a file in output_dir.
+
+    Args:
+        preds (list): A list of optical flow predictions as numpy arrays.
+        output_dir (string): The path to the output directory.
+    """
+    np.save(os.path.join(output_dir, rainbow.OPTICAL_FLOW_FILENAME),
+            np.array(preds), allow_pickle=False)
 
 
 def load_optical_flow(flow_path):
+    """Loads optical flow predictions from a file.
+
+    Args:
+        flow_path (string): The path to a .npy file containing saved optical
+            flow predictions.
+
+    Returns:
+        list: A list of optical flow predictions as numpy arrays.
+    """
     raw_preds = np.load(flow_path)
     preds = []
     for i in range(0, raw_preds.shape[0]):
@@ -151,6 +247,12 @@ def load_optical_flow(flow_path):
 
 
 def save_img_ser_metadata(imgs, output_dir):
+    """Saves image sequence metadata to a .json file in output_dir.
+
+    Args:
+        imgs (list): A list of images as PIMS Frame arrays.
+        output_dir (string): The path to the output directory.
+    """
     metadata = imgs[0].metadata['img_ser_md']
     now = datetime.now()
     dt_str = now.strftime('%d %B %Y, %H:%M:%S')
@@ -161,6 +263,19 @@ def save_img_ser_metadata(imgs, output_dir):
 
 
 def video_reshape(vid_path, set_wdh=None):
+    """Resizes a video.
+
+    Calculates the video dimensions of a video, while maintaining the aspect
+    ratio, if the width were resized.
+
+
+    Args:
+        vid_path (string): The path to a video file.
+        set_wdh (int, optional): The new width of the video. Defaults to None.
+
+    Returns:
+        int, int: The new width and height of the video.
+    """
     cap = cv2.VideoCapture(vid_path)
     hgt, wdh, _ = cap.read()[1].shape
     dsp_wdh = set_wdh if set_wdh is not None else wdh
