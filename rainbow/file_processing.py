@@ -140,6 +140,7 @@ def get_output_dir(imgs, config):
     output_dir = '({})_{}{}_etc'.format(ext.replace('.', ''), name, ser)
     output_dir = os.path.join(imgs[0].metadata['img_ser_md']['dir'],
                               output_dir)
+    output_dir = output_dir.replace(' ', '_')
 
     return output_dir
 
