@@ -68,7 +68,7 @@ setup(
             'rainbow = rainbow.__main__:main'
         ]
     },
-    python_requires='==3.7.*'
+    python_requires='>=3.6',
     cmdclass={
         'develop': PostDevelop,
         'install': PostInstall,
