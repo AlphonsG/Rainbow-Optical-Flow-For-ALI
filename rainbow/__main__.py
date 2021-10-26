@@ -1,4 +1,5 @@
 import os
+import sys
 
 from gooey import Gooey, GooeyParser
 
@@ -7,7 +8,11 @@ from rainbow.file_processing import process_files
 import yaml
 
 
-@Gooey()
+if len(sys.argv) >= 2 and '--ignore-gooey' not in sys.argv:
+    sys.argv.append('--ignore-gooey')
+
+
+@Gooey(hide_progress_msg=True)
 def process_args():
     parser = GooeyParser(description='Automated air liquid interface cell '
                          'culture analysis using deep optical flow.')
@@ -31,7 +36,7 @@ def process_args():
 
 
 def main():
-    args = process_args()  # check checkpoint path
+    args = process_args()
     assert os.path.isdir(args.root_dir), ('Invalid root directory path '
                                           'provided.')
     assert os.path.isfile(args.config), 'Invalid config file path provided.'
