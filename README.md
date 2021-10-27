@@ -1,9 +1,9 @@
 # Rainbow
 
 ![](https://img.shields.io/badge/platform-windows%20%7C%20linux%20%7C%20macOS-lightgrey)
-![](https://img.shields.io/github/languages/top/AlphonsGwatimba/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow)
+![](https://img.shields.io/github/languages/top/AlphonsG/Rainbow-Optical-Flow-For-ALI)
 [![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-360/)
-[![Python package](https://github.com/AlphonsG/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow/actions/workflows/python-package.yaml/badge.svg?branch=dev2)](https://github.com/AlphonsG/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow/actions/workflows/python-package.yaml)
+[![Python package](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/actions/workflows/python-package.yaml/badge.svg?branch=dev2)](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/actions/workflows/python-package.yaml)
 
 ![](misc/images/banner_img.png?raw=true "Rainbow")
 
@@ -41,11 +41,11 @@ Rainbow can be installed on Linux, Windows and macOS. Although it is not a requi
 
 4. Clone this repository into your desired directory:
 
-   ```git clone https://github.com/AlphonsGwatimba/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow.git```
+   ```git clone https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI.git```
 
 5. Navigate into the cloned directory:
 
-    ```cd Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow```
+    ```cd Rainbow-Optical-Flow-For-ALI```
 6. Install Rainbow:
 
    ```python setup.py install```
@@ -108,7 +108,7 @@ Rainbow can automatically generate an analysis report after computing the optica
 
 ## License <a name="license"></a>
 
-[MIT License](LICENSE) 
+[MIT License](LICENSE)
 
 ## Acknowledgements <a name="acknowledgements"></a>
 
