@@ -1,11 +1,10 @@
 # Rainbow
 
-![](https://img.shields.io/github/languages/top/AlphonsGwatimba/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow)
 ![](https://img.shields.io/badge/platform-windows%20%7C%20linux%20%7C%20macOS-lightgrey)
+![](https://img.shields.io/github/languages/top/AlphonsGwatimba/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow)
 [![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-360/)
 [![Coverage Status](https://coveralls.io/repos/github/AlphonsG/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow/badge.svg?branch=dev2)](https://coveralls.io/github/AlphonsG/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow?branch=dev2)
 [![Python package](https://github.com/AlphonsG/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow/actions/workflows/python-package.yaml/badge.svg?branch=dev2)](https://github.com/AlphonsG/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow/actions/workflows/python-package.yaml)
-![](https://img.shields.io/github/license/AlphonsGwatimba/Automated-Air-Liquid-Interface-Cell-Culture-Analysis-Using-Deep-Optical-Flow)
 
 ![](misc/images/banner_img.png?raw=true "Rainbow")
 
