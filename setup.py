@@ -57,8 +57,7 @@ setup(
     author='Alphons Gwatimba',
     author_email='alphonsg@protonmail.com',
     packages=find_packages(),
-    url=('https://github.com/AlphonsGwatimba/Automated-Air-Liquid-Interface-'
-         'Cell-Culture-Analysis-Using-Deep-Optical-Flow'),
+    url='https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI',
     license='LICENSE',
     description=('Automated air liquid interface cell culture analysis using '
                  'deep optical flow.'),
