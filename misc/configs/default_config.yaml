@@ -11,7 +11,7 @@ nd2:
   bdl_axs:
     - 'y'
     - 'x'
-  # axis to to use when naming images loaded from .nd2 file
+  # axis to use when naming images loaded from .nd2 file
   naming_axs:
   - 'v'
 
