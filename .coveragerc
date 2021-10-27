@@ -1,0 +1,2 @@
+[run]
+omit = rainbow/optical_flow/third_party/*

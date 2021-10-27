@@ -1,42 +1,40 @@
-report_path: ./misc/notebooks/report.ipynb
+# generate report (default = report.ipynb)
+report_path: report.ipynb
 
+# .nd2 file configuration
 nd2:
+  # ordered nd2 axes to iterate over when loading images from .nd2 file
   iter_axs:
-    - 'z'
-    - 'm'
+    - 'v'
     - 't'
+  # axes to bundle when loading images from .nd2 file
   bdl_axs:
     - 'y'
     - 'x'
+  # axis to use when naming images loaded from .nd2 file
   naming_axs:
-  - 'm'
+  - 'v'
 
+# default micrometres per pixel value of image sequences
 mpp: 0.31302569743655434
 
-proc_bch_sz: 1
-max_qd_bches: 500
-q_sz: 200
+# model to use when computing optical flow
+opt_flow_model: gma
 
-opt_flow_model: pwc_net
-
-pwc_net:
-  model:
-    opts:
-      verbose: False
-      ckpt_path: "./rainbow/optical_flow/models/pwc_net/checkpoints/\
-        pwcnet-lg-6-2-multisteps-chairsthingsmix/pwcnet.ckpt-595000"
-      batch_size: 1
-      gpu_devices:
-        - /device:GPU:0
-      controller: /device:GPU:0
-      use_dense_cx: True
-      use_res_cx: True
-      adapt_info: [1, 1024, 1280, 2]
-    mode: test
-
-  pred:
-    batch_size: 1
-    verbose: False
-
-  const_img_shape: True
-  tf_logging: False
+# Learning to Estimate Hidden Motions with Global Motion Aggregation
+# https://github.com/zacjiang/GMA
+gma:
+  # restore checkpoint (default = gma-sintel.pth)
+  model: gma-sintel.pth
+  # define model name
+  model_name: GMA
+  # number of heads in attention and aggregation
+  num_heads: 1
+  # only use position-wise attention
+  position_only: no
+  # use position and content-wise attention
+  position_and_content: no
+  # use mixed precision
+  mixed_precision: no
+  # cpu or cuda (for gpu)
+  device: cpu

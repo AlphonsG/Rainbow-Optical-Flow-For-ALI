@@ -19,3 +19,11 @@ notebooks/.ipynb_checkpoints/
 examples/notebooks/.ipynb_checkpoints/
 
 misc/notebooks/.ipynb_checkpoints/
+
+.ipynb_checkpoints/
+
+tests/heavy/__pycache__/
+
+tests/__pycache__/
+
+tests/light/__pycache__/
