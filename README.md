@@ -14,10 +14,11 @@ Repository for software detailed in 'Automated Air-Liquid Interface Cell Culture
 2. [Usage](#usage)
 3. [Additional Information](#additional-information)
 4. [Examples](#examples)
-5. [License](#license)
-6. [Acknowledgements](#acknowledgements)
-7. [Software Paper](#software-paper-abstract)
-8. [Our Team](#our-team)
+6. [Community Guidelines](#community-guidelines)
+7. [License](#license)
+9. [Software Paper](#software-paper-abstract)
+10. [Our Team](#our-team)
+11. [Acknowledgements](#acknowledgements)
 
 ## Installation <a name="installation"></a>
 
@@ -106,15 +107,19 @@ Rainbow can automatically generate an analysis report after computing the optica
   <img src="misc/images/quiver_plot.gif" width="390" />
 </p>
 
+## Community guidelines <a name="community-guidelines"></a>
+ 
+ Guidelines for third-parties wishing to:
+
+- Contribute to the software
+- Report issues or problems with the software
+- Seek support
+
+can be found [here](CONTRIBUTING.md).
+
 ## License <a name="license"></a>
 
 [MIT License](LICENSE)
-
-## Acknowledgements <a name="acknowledgements"></a>
-
-- https://github.com/philferriere/tfoptflow
-- https://docs.opencv.org/3.4/d4/dee/tutorial_optical_flow.html
-- https://github.com/zacjiang/GMA
 
 ## Software Paper <a name="software-paper-abstract"></a>
 
@@ -129,3 +134,9 @@ To be released
 
 ## Our Team <a name="our-team"></a>
 [Learn more](https://walyanrespiratory.telethonkids.org.au/our-research/focus-areas/artifical-intelligence/)
+
+## Acknowledgements <a name="acknowledgements"></a>
+
+- https://github.com/philferriere/tfoptflow
+- https://docs.opencv.org/3.4/d4/dee/tutorial_optical_flow.html
+- https://github.com/zacjiang/GMA
