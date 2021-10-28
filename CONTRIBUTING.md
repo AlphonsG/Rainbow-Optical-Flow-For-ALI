@@ -2,7 +2,7 @@
 
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
 
-## Did you find a bug?
+## Report issues or problems with the software
 
 * **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/issues).
 
@@ -28,3 +28,6 @@ Always write a clear log message for your commits, for example:
  
  Please follow the [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html) when contributing to the code.
  
+ ## Seek Support
+ 
+ Please feel free to send an email to [this](alphonsg@protonmail.com) address for other matters.
