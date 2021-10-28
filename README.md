@@ -75,7 +75,7 @@ Rainbow can be installed on Linux, Windows and macOS. Although it is not a requi
 
 ### Graphical User Interface (GUI)
 
-To launch the Rainbow GUI, enter the command `rainbow` within the `rainbow_env` environment. Next, to run Rainbow, select an image series directory to process (example provided [here](examples/example_image_series)) and a configuration file (example provided [here](misc/configs/default_config.yaml)).
+To launch the Rainbow GUI, enter the command `rainbow` within the `rainbow_env` environment. Next, to run Rainbow, select an image series directory to process (example Air-Liquid Interface cell culture image series directory provided [here](examples/example_image_series)) and a configuration file (example provided [here](misc/configs/default_config.yaml)).
 The data generated in the input image series directory should be similar to [this](examples/example_output).
 
 ### Command Line Interface (CLI)
