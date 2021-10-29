@@ -22,7 +22,7 @@ Repository for software detailed in 'Automated Air-Liquid Interface Cell Culture
 
 ## Installation <a name="installation"></a>
 
-Rainbow can be installed on Linux, Windows and macOS. Although it is not a requirement, we recommend installing and running Rainbow on a GPU-enabled system to minimize processing times. We also recommend installing and running Rainbow within a virtual environment. Rainbow supports Python 3.6 and up.
+Rainbow can be installed on Linux, Windows & macOS and supports Python 3.6 and up. We recommend installing and running Rainbow within a virtual environment. Although it is not a requirement, we also recommend installing and running Rainbow on a GPU-enabled system to minimize processing times. 
 
 1. Download and install [Miniconda3](https://docs.conda.io/en/latest/miniconda.html). Detailed official installation instructions can be found [here](https://conda.io/projects/conda/en/latest/user-guide/install/index.html), if needed.
 
