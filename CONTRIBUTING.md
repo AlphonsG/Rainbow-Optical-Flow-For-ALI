@@ -30,4 +30,5 @@ Always write a clear log message for your commits, for example:
  
  ## Seek Support
  
- Please feel free to send an email to [this](alphonsg@protonmail.com) address for other matters.
+ Please feel free to send an email to the following address for other matters:
+ - alphonsg@protonmail.com
