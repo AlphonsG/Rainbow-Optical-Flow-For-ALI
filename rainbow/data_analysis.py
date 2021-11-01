@@ -2,6 +2,7 @@ import csv
 import math
 import os
 import warnings
+from itertools import chain
 from pathlib import Path
 
 import cv2
@@ -206,10 +207,11 @@ def gen_base_metrics(data):
         mag[np.isnan(mag)] = 0  # remove NaNs
         mag *= data['raw_imgs'][0].metadata['mpp']  # convert to um, calib?
         for key, metric in zip(['mag_stats', 'dirn_stats'], [mag, dirn]):
-            data[key].append(gen_stats(metric, i))
+            circ = True if key == 'dirn_stats' else False
+            data[key].append(gen_stats(metric, i, circ))
 
 
-def gen_stats(metric, i):
+def gen_stats(metric, i, circ=False):
     """Calculates statistics for a given metric.
 
     The statistics (e.g. mean, variance, etc.) are for a given metric in a
@@ -219,14 +221,25 @@ def gen_stats(metric, i):
         metric (list): A list of values for the given metric.
         i (int): The corresponding frame number for the values of the given
             metric.
-
+        circ (bool, optional): If true, treats metric as circular data.
+            Defaults to False.
     Returns:
         dict: The statistics for the given metric.
     """
-    stats = scipy.stats.describe(metric, axis=None)
-    stats = {'frame': i, 'min': stats[1][0],
-             'max': stats[1][1], 'mean': stats[2],
-             'std': math.sqrt(stats[3]), 'var': stats[3]}
+    if circ:
+        metric = list(chain.from_iterable(metric.tolist()))
+        mini, maxi = min(metric), max(metric)
+        metric = np.deg2rad(metric)
+        mean, std, var = scipy.stats.circmean(metric), scipy.stats.circstd(
+            metric), scipy.stats.circvar(metric)
+        mean, std, var = np.rad2deg(mean), np.rad2deg(std), np.rad2deg(var)
+        stats = {'frame': i, 'min': mini, 'max': maxi, 'mean': mean,
+                 'std': std, 'var': var}
+    else:
+        stats = scipy.stats.describe(metric, axis=None)
+        stats = {'frame': i, 'min': stats[1][0],
+                 'max': stats[1][1], 'mean': stats[2],
+                 'std': math.sqrt(stats[3]), 'var': stats[3]}
 
     return stats
 
