@@ -27,6 +27,9 @@ REQUIRED_PACKAGES = [
 
 def gooey_launcher_workaround():
     """Fix for https://github.com/chriskiehl/Gooey/issues/649"""
+    if os.name != 'nt':
+        return
+
     try:
         conda_prefix = os.environ['CONDA_PREFIX']
     except KeyError:
@@ -34,7 +37,11 @@ def gooey_launcher_workaround():
 
     src = os.path.join(conda_prefix, 'Scripts', 'rainbow-script.py')
     dst = os.path.join(conda_prefix, 'Scripts', 'rainbow')
-    shutil.copy2(src, dst)
+    try:
+        shutil.copy2(src, dst)
+    except IOError as e:
+        msg = f'Could not apply Gooey Launcher bug workaround, reason: {e}'
+        print(msg)
 
 
 class PostDevelop(develop):
