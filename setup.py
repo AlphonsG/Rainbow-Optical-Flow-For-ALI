@@ -40,7 +40,7 @@ def gooey_launcher_workaround():
     try:
         shutil.copy2(src, dst)
     except IOError as e:
-        msg = f'Could not apply Gooey Launcher bug workaround, reason: {e}'
+        msg = f'\nCould not apply Gooey Launcher bug workaround, reason: {e}'
         print(msg)
 
 
