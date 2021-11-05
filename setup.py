@@ -6,6 +6,7 @@ from setuptools.command.develop import develop
 from setuptools.command.install import install
 
 REQUIRED_PACKAGES = [
+    'pyparsing < 3',
     'jupyterlab',
     'matplotlib',
     'moviepy',
