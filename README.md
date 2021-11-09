@@ -56,7 +56,7 @@ Rainbow can be installed on Linux, Windows & macOS and supports Python 3.6 and u
    <p style="text-align:center;">
     <img src="misc/images/pytorch_get_started.png" width="750" alt="centered image" />
     </p>
-   For example, users without a GPU (i.e. CPU only) will run:
+   For example, Linux users without a GPU (i.e. CPU only) will run:
 
    ```conda install pytorch torchvision torchaudio cpuonly -c pytorch```
 
