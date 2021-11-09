@@ -24,7 +24,8 @@ REQUIRED_PACKAGES = [
     'pytest',
     'Gooey',
     'imutils',
-    'astropy'
+    'astropy',
+    'physt'
 ]
 
 
