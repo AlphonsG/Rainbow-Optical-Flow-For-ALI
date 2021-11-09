@@ -23,7 +23,8 @@ REQUIRED_PACKAGES = [
     'einops',
     'pytest',
     'Gooey',
-    'imutils'
+    'imutils',
+    'astropy'
 ]
 
 
