@@ -16,6 +16,8 @@ import nbformat
 
 import numpy as np
 
+from physt import polar
+
 import scipy.stats
 
 SENTINEL = 'STOP'
@@ -267,3 +269,28 @@ def save_stats(stats, csv_path, unit):
     except (OSError, csv.Error, ValueError) as e:
         msg = 'Could not create stats file. Message: {}.'.format(str(e))
         warnings.warn(msg, UserWarning)
+
+
+def save_polar_plots(preds, output_dir, dpi=1000, mpp=None):
+    """Saves polar plots.
+
+    Writes polar plots visualizing the optical flow circular data of an image
+    sequence to output_dir.
+
+    Args:
+        preds (list): The optical flow across an image sequence.
+        output_dir (string): The path to the output directory.
+        dpi (int, optional): The dots per inch of the saved quiver plot images.
+            Defaults to 1000.
+        mpp (float, optional): The micrometres per pixel value of the
+            image sequence, if None will use pixel units. Defaults to None.
+    """
+    if mpp is None:
+        mpp = 1
+    for i, pred in enumerate(preds):
+        x, y = pred[..., 0].flatten() * mpp, pred[..., 1].flatten() * mpp
+        hist = polar(x, y)
+        hist.plot.polar_map(cmap="rainbow")
+        path = os.path.join(output_dir, 'Image_{}.png'.format(i))
+        plt.savefig(path, dpi=dpi, bbox_inches=0)
+        plt.close()
