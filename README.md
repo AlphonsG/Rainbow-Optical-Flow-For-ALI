@@ -22,17 +22,17 @@ Repository for software detailed in 'Automated Air-Liquid Interface Cell Culture
 
 ## Installation <a name="installation"></a>
 
-Rainbow can be installed on Linux, Windows & macOS and supports Python 3.6 and up. We recommend installing and running Rainbow within a virtual environment. Although it is not a requirement, we also recommend installing and running Rainbow on a GPU-enabled system to minimize processing times. 
+Rainbow can be installed on Linux, Windows & macOS and supports Python 3.6 and up. We recommend installing and running Rainbow within a virtual environment. Although it is not a requirement, we also recommend installing and running Rainbow on a GPU-enabled system to minimize processing times.
 
 1. Download and install [Miniconda3](https://docs.conda.io/en/latest/miniconda.html). Detailed official installation instructions can be found [here](https://conda.io/projects/conda/en/latest/user-guide/install/index.html), if needed.
 
 2. Launch the terminal (*Linux* and *macOS* users) or start the program 'Anaconda Prompt (miniconda3)' (*Windows* users). The proceeding commands will be entered into the opened window.
 
 
-3. Create and prepare a virtual environment with Python 3.7 called 'rainbow_env':
+3. Create and prepare a virtual environment with Python 3.8 called 'rainbow_env':
 
    ```
-   conda create -n rainbow_env python=3.7 git git-lfs
+   conda create -n rainbow_env python=3.8 git git-lfs
 
    conda activate rainbow_env
 
@@ -47,6 +47,7 @@ Rainbow can be installed on Linux, Windows & macOS and supports Python 3.6 and u
 5. Navigate into the cloned directory:
 
     ```cd Rainbow-Optical-Flow-For-ALI```
+
 6. Install Rainbow:
 
    ```python setup.py install```
@@ -59,7 +60,7 @@ Rainbow can be installed on Linux, Windows & macOS and supports Python 3.6 and u
 
    ```conda install pytorch torchvision torchaudio cpuonly -c pytorch```
 
-8. Finish up by running the following commands:
+8. Finalize the installation by running the following commands:
 
    ```
    git submodule sync
@@ -69,18 +70,24 @@ Rainbow can be installed on Linux, Windows & macOS and supports Python 3.6 and u
 
 - Note: Virtual environment can be deactivated using:
 
-   ```conda deactivate rainbow_env```
+   ```conda deactivate```
 
 ## Usage <a name="usage"></a>
 
-### Graphical User Interface (GUI)
-
-To launch the Rainbow GUI, enter the command `rainbow` within the `rainbow_env` environment. Next, to run Rainbow, select an image series directory to process (example Air-Liquid Interface cell culture image series directory provided [here](examples/example_image_series)) and a configuration file (example provided [here](misc/configs/default_config.yaml)).
-The data generated in the input image series directory should be similar to [this](examples/example_output).
-
 ### Command Line Interface (CLI)
 
-Advanced users familiar with command line applications can instead use rainbow through a CLI. Enter `rainbow --help` or `rainbow -h` within the `rainbow_env` environment for a list of available command arguments and descriptions.
+Rainbow can be used rainbow through a CLI. Run `rainbow --help` or `rainbow -h` within the `rainbow_env` environment for a list of available command arguments and descriptions.
+
+To test rainbow using the provided Air-Liquid Interface cell culture example image series, run the following command from within the cloned repository directory:
+
+`rainbow examples/example_image_series misc/configs/default_config.yaml`
+
+After processing is finished, a folder containing similar outputs (e.g. a HTML report,  videos, images, CSV files) to those in [this](examples/example_output/(tif)_191018_HNA-ALI_d14.nd2_-_191018_HNA-ALI_d14.nd2_(series_03)0000_etc) example output folder should be generated in `examples/example_image_series`.
+### Graphical User Interface (GUI)
+
+Rainbow can be also be used through a GUI, which can be launched by running the command `rainbow` within the `rainbow_env` environment.
+
+To test rainbow using the provided Air-Liquid Interface cell culture example image series, select `examples/example_image_series` as the input image series and `misc/configs/default_config.yaml`  as the configuration file in the GUI under 'Required Arguments'. After processing is finished, a folder containing similar outputs (e.g. a HTML report,  videos, images, CSV files) to those in [this](examples/example_output/(tif)_191018_HNA-ALI_d14.nd2_-_191018_HNA-ALI_d14.nd2_(series_03)0000_etc) example output folder should be generated in `examples/example_image_series`.
 
 ## Additional Information <a name="additional-information"></a>
 
@@ -108,7 +115,7 @@ Rainbow can automatically generate an analysis report after computing the optica
 </p>
 
 ## Community guidelines <a name="community-guidelines"></a>
- 
+
  Guidelines for third-parties wishing to:
 
 - Contribute to the software
