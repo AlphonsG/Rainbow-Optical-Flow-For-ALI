@@ -32,7 +32,7 @@ Rainbow can be installed on Linux, Windows & macOS and supports Python 3.6 and u
 3. Create and prepare a virtual environment with Python 3.8 called 'rainbow_env':
 
    ```
-   conda create -n rainbow_env python=3.8 git git-lfs
+   conda create -n rainbow_env python=3.8 git git-lfs jupyterlab
 
    conda activate rainbow_env
 
