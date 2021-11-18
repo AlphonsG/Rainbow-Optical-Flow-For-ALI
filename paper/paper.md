@@ -13,14 +13,14 @@ authors:
   - name: Alphons Gwatimba^[corresponding author]
     orcid: 0000-0002-9607-2839
     affiliation: "1, 2"
+  - name: Joseph Ho
+    affiliation: "1, 2"
   - name: Thomas Iosifidis^[co-second author]
     orcid: 0000-0001-8462-5865
     affiliation: "1, 3, 4"
   - name: Yuliya V. Karpievitch^[co-second author]
     orcid: 0000-0003-2586-3358
     affiliation: "1, 5"
-  - name: Joseph Ho
-    affiliation: "1, 2"
 
 affiliations:
   - name: Wal-yan Respiratory Research Centre, Telethon Kids Institute, University of Western Australia, Nedlands, 6009, Western Australia, Australia
