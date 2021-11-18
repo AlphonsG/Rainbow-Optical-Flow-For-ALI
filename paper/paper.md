@@ -19,6 +19,9 @@ authors:
   - name: Yuliya V. Karpievitch^[co-second author]
     orcid: 0000-0003-2586-3358
     affiliation: "1, 5"
+  - name: Joseph Ho
+    affiliation: "1, 2"
+
 affiliations:
   - name: Wal-yan Respiratory Research Centre, Telethon Kids Institute, University of Western Australia, Nedlands, 6009, Western Australia, Australia
     index: 1
