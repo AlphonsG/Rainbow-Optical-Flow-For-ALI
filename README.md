@@ -2,12 +2,12 @@
 
 ![](https://img.shields.io/badge/platform-windows%20%7C%20linux%20%7C%20macOS-lightgrey)
 ![](https://img.shields.io/github/languages/top/AlphonsG/Rainbow-Optical-Flow-For-ALI)
-[![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-360/)
+[![Python 3.6+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-360/)
 [![Python package](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/actions/workflows/python-package.yaml/badge.svg?branch=dev2)](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/actions/workflows/python-package.yaml)
 
 ![](misc/images/banner_img.png?raw=true "Rainbow")
 
-Repository for software detailed in 'Automated Air-Liquid Interface Cell Culture Analysis Using Deep Optical Flow' software paper. See Abstract [below](#software-paper-abstract) for more details.
+Software for automated Air-Liquid Interface cell culture image analysis using deep optical flow. See [below](#software-paper) for more details.
 
 ## Table of contents
 1. [Installation](#installation)
@@ -16,13 +16,13 @@ Repository for software detailed in 'Automated Air-Liquid Interface Cell Culture
 4. [Examples](#examples)
 6. [Community Guidelines](#community-guidelines)
 7. [License](#license)
-9. [Software Paper](#software-paper-abstract)
+9. [Software Paper](#software-paper)
 10. [Our Team](#our-team)
 11. [Acknowledgements](#acknowledgements)
 
 ## Installation <a name="installation"></a>
 
-Rainbow can be installed on Linux, Windows & macOS and supports Python 3.6 and up. We recommend installing and running Rainbow within a virtual environment. Although it is not a requirement, we also recommend installing and running Rainbow on a GPU-enabled system to minimize processing times.
+Rainbow can be installed on Linux, Windows & macOS and supports Python 3.8 and up. We recommend installing and running Rainbow within a virtual environment. Although it is not a requirement, we also recommend installing and running Rainbow on a GPU-enabled system to minimize processing times.
 
 1. Download and install [Miniconda3](https://docs.conda.io/en/latest/miniconda.html). Detailed official installation instructions can be found [here](https://conda.io/projects/conda/en/latest/user-guide/install/index.html), if needed.
 
@@ -128,13 +128,10 @@ can be found [here](CONTRIBUTING.md).
 
 [MIT License](LICENSE)
 
-## Software Paper <a name="software-paper-abstract"></a>
+## Software Paper <a name="software-paper"></a>
 
 ### Title
-Automated Air-Liquid Interface Cell Culture Analysis Using Deep Optical Flow
-
-### Abstract
-To be released
+Rainbow: Automated Air-Liquid Interface Cell Culture Analysis Using Deep Optical Flow
 
 ### Access
 To be released
