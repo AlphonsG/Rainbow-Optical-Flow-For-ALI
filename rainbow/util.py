@@ -193,10 +193,6 @@ def save_video(input_dir, output_path, fps=5):
     if len(imgs) == 0:
         return False
 
-    ffmpeg = shutil.which('ffmpeg')
-    if ffmpeg is not None:
-        os.environ['FFMPEG_BINARY'] = ffmpeg
-
     temp_report = os.path.join(tempfile.gettempdir(), 'temp_report.log')
     os.environ['FFREPORT'] = f'file={temp_report}'
     video = ImageSequenceClip([cv2.cvtColor(img, cv2.COLOR_BGR2RGB) for img in
