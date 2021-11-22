@@ -1,6 +1,7 @@
 import json
 import os
 import shutil
+import tempfile
 import warnings
 from datetime import datetime
 from pathlib import Path
@@ -192,7 +193,8 @@ def save_video(input_dir, output_path, fps=5):
     if len(imgs) == 0:
         return False
 
-    os.environ['FFREPORT'] = 'file='
+    temp_report = os.path.join(tempfile.gettempdir(), 'temp_report.log')
+    os.environ['FFREPORT'] = f'file={temp_report}'
     video = ImageSequenceClip([cv2.cvtColor(img, cv2.COLOR_BGR2RGB) for img in
                                imgs], fps=fps)
     video.write_videofile(os.path.join(output_path + VID_FILE_EXT),
