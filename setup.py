@@ -70,7 +70,7 @@ setup(
     license='LICENSE',
     description=('Automated air liquid interface cell culture analysis using '
                  'deep optical flow.'),
-    long_description=open('README.md').read(),
+    long_description=open('README.md', encoding='UTF-8').read(),
     install_requires=REQUIRED_PACKAGES,
     entry_points={
         'console_scripts': [
