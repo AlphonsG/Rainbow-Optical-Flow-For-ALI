@@ -114,6 +114,19 @@ Rainbow can automatically generate an analysis report after computing the optica
   <img src="misc/images/quiver_plot.gif" width="390" />
 </p>
 
+### Experimental Methods
+
+Primary tracheobronchial epithelial cells were isolated through trans‐laryngeal, non‐bronchoscopic cytologic brushings via an endotracheal tube from two children (3.3 and 4.1 years), as previously described (Looi et al., 2018; Martinovich et al., 2017). The use of tracheobronchial epithelial cells for these studies were approved by the Human Research Ethics Committees of St John of God Hospital and The University of Western Australia. Cells were imaged (20x objective) on day 2 post air-lift for 2.5 hrs every 8 mins with a Nikon C2+ inverted microscope incubated at 37° C with humidified 95% air/5% CO2 using an Okolab live cell imaging chamber to generate time lapse images of maximally migrating cells as previously described (Park et al., 2015; Mitchel et al., 2020). The example image series provided in this repository contains 20 image frames at 1280 x 1024 px resolution.
+
+#### References
+
+Looi,K. et al. (2018) Effects of human rhinovirus on epithelial barrier integrity and function in children with asthma. Clinical & Experimental Allergy, 48, 513–524.
+
+Martinovich,K.M. et al. (2017) Conditionally reprogrammed primary airway epithelial cells maintain morphology, lineage and disease specific functional characteristics. Scientific Reports, 7, 17971.
+
+Mitchel,J.A. et al. (2020) In primary airway epithelial cells, the unjamming transition is distinct from the epithelial-to-mesenchymal transition. Nature Communications, 11, 5053.
+Park,J.-A. et al. (2015) Unjamming and cell shape in the asthmatic airway epithelium. Nature Materials, 14, 1040–1048.
+
 ## Community guidelines <a name="community-guidelines"></a>
 
  Guidelines for third-parties wishing to:
