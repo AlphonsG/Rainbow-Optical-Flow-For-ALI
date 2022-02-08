@@ -7,8 +7,8 @@ from setuptools.command.install import install
 
 REQUIRED_PACKAGES = [
     'pyparsing < 3',
-    'matplotlib',
     'moviepy',
+    'matplotlib',
     'natsort',
     'opencv-python',
     'pandas',
