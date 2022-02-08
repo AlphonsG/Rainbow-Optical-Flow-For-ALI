@@ -50,7 +50,7 @@ Rainbow can be installed on Linux, Windows & macOS and supports Python 3.8 and u
 
 6. Install Rainbow:
 
-   ```python setup.py develop```
+   ```pip install -e .```
 
 7. Install PyTorch by specifying your system configuration using the official [PyTorch get started tool](https://pytorch.org/get-started/locally/) and running the generated command:
    <p style="text-align:center;">
