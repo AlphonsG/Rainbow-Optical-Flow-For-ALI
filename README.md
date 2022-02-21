@@ -22,22 +22,18 @@ Software for automated Air-Liquid Interface cell culture image analysis using de
 
 ## Installation <a name="installation"></a>
 
-Rainbow can be installed on Linux, Windows & macOS and supports Python 3.8 and up. We recommend installing and running Rainbow within a virtual environment. Although it is not a requirement, we also recommend installing and running Rainbow on a GPU-enabled system to minimize processing times.
+Rainbow can be installed on Linux, Windows & macOS and supports Python 3.8 and up. We recommend installing and running Rainbow within a [virtual environment](https://docs.python.org/3/tutorial/venv.html). Although it is not a requirement, we also recommend installing and running Rainbow on a GPU-enabled system to minimize processing times.
 
-1. Download and install [Miniconda3](https://docs.conda.io/en/latest/miniconda.html). Detailed official installation instructions can be found [here](https://conda.io/projects/conda/en/latest/user-guide/install/index.html), if needed.
+1. Download and install [Python](https://www.python.org/downloads/) (Rainbow was tested using [Python version 3.8.10](https://www.python.org/downloads/release/python-3810/)), [Git](https://git-scm.com/downloads) and [Git LFS](https://git-lfs.github.com/).
 
-2. Launch the terminal (*Linux* and *macOS* users) or start the program 'Anaconda Prompt (miniconda3)' (*Windows* users). The proceeding commands will be entered into the opened window.
+2. Launch the terminal (*Linux* and *macOS* users) or command prompt (*Windows* users). The proceeding commands will be entered into the opened window.
 
 
-3. Create and prepare a virtual environment with Python 3.8 called 'rainbow_env':
+3. Create and activate a virtual environment called 'rainbow-env' in your desired directory:
 
-   ```
-   conda create -n rainbow_env python=3.8 git git-lfs ffmpeg jupyterlab
+   ```python -m venv rainbow-env```
 
-   conda activate rainbow_env
-
-   git lfs install
-   ```
+   ```rainbow-env/bin/activate``` (*Linux* and *macOS* users) or ```rainbow-env\Scripts\activate.bat``` (*Windows* users)
 
 
 4. Clone this repository into your desired directory:
@@ -56,13 +52,15 @@ Rainbow can be installed on Linux, Windows & macOS and supports Python 3.8 and u
    <p style="text-align:center;">
     <img src="misc/images/pytorch_get_started.png" width="750" alt="centered image" />
     </p>
-   For example, Linux users without a GPU (i.e. CPU only) will run:
+   For example, Windows users without a GPU (i.e. CPU only) will run:
 
-   ```conda install pytorch torchvision torchaudio cpuonly -c pytorch```
+   ```pip install torch torchvision torchaudio```
 
 8. Finalize the installation by running the following commands:
 
    ```
+   git lfs install
+
    git submodule sync
 
    git submodule update --init --recursive
@@ -70,13 +68,13 @@ Rainbow can be installed on Linux, Windows & macOS and supports Python 3.8 and u
 
 - Note: Virtual environment can be deactivated using:
 
-   ```conda deactivate```
+   ```deactivate```
 
 ## Usage <a name="usage"></a>
 
 ### Command Line Interface (CLI)
 
-Rainbow can be used rainbow through a CLI. Run `rainbow --help` or `rainbow -h` within the `rainbow_env` environment for a list of available command arguments and descriptions.
+Rainbow can be used rainbow through a CLI. Run `rainbow --help` or `rainbow -h` within the `rainbow-env` environment for a list of available command arguments and descriptions.
 
 To test rainbow using the provided Air-Liquid Interface cell culture example image series, run the following command from within the cloned repository directory:
 
@@ -85,7 +83,7 @@ To test rainbow using the provided Air-Liquid Interface cell culture example ima
 After processing is finished, a folder containing similar outputs (e.g. a HTML report,  videos, images, CSV files) to those in [this](examples/example_output/(tif)_191018_HNA-ALI_d14.nd2_-_191018_HNA-ALI_d14.nd2_(series_03)0000_etc) example output folder should be generated in `examples/example_image_series`.
 ### Graphical User Interface (GUI)
 
-Rainbow can be also be used through a GUI, which can be launched by running the command `rainbow` within the `rainbow_env` environment.
+Rainbow can be also be used through a GUI, which can be launched by running the command `rainbow` within the `rainbow-env` environment.
 
 To test rainbow using the provided Air-Liquid Interface cell culture example image series, select `examples/example_image_series` as the input image series and `misc/configs/default_config.yaml`  as the configuration file in the GUI under 'Required Arguments'. After processing is finished, a folder containing similar outputs (e.g. a HTML report,  videos, images, CSV files) to those in [this](examples/example_output/(tif)_191018_HNA-ALI_d14.nd2_-_191018_HNA-ALI_d14.nd2_(series_03)0000_etc) example output folder should be generated in `examples/example_image_series`.
 
