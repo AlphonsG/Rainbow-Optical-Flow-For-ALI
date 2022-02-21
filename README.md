@@ -101,7 +101,7 @@ Rainbow can automatically generate an analysis report after computing the optica
 
 ### Scripts
 
-The [scripts](scripts) folder contains python scripts to enable additional functionality such as the ability to combine reports from multiple experiments into one file for simpler viewing and comparisons.
+The [scripts](scripts) folder contains python scripts to enable additional functionality such as the ability to combine reports from multiple experiments into one file for simpler viewing and comparisons. Run `python <script-name>.py --help` in the terminal to view the usage instructions for a script.
 
 ### Automated Testing
 
