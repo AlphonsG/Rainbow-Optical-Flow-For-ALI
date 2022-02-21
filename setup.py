@@ -6,7 +6,6 @@ from setuptools.command.develop import develop
 from setuptools.command.install import install
 
 REQUIRED_PACKAGES = [
-    'pyparsing < 3',
     'moviepy',
     'matplotlib',
     'natsort',
@@ -23,7 +22,8 @@ REQUIRED_PACKAGES = [
     'Gooey',
     'imutils',
     'astropy',
-    'physt'
+    'physt',
+    'jupyterlab'
 ]
 
 
