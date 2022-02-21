@@ -62,7 +62,6 @@ class PostInstall(install):
 
 setup(
     name='rainbow',
-    version='0.1.0',
     author='Alphons Gwatimba',
     author_email='alphonsg@protonmail.com',
     packages=find_packages(),
@@ -81,5 +80,7 @@ setup(
     cmdclass={
         'develop': PostDevelop,
         'install': PostInstall,
-    }
+    },
+    use_calver=True,
+    setup_requires=['calver']
 )
