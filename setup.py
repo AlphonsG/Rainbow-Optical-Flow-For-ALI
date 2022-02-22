@@ -1,6 +1,3 @@
-import os
-import shutil
-
 from setuptools import find_packages, setup
 from setuptools.command.develop import develop
 from setuptools.command.install import install
@@ -27,37 +24,16 @@ REQUIRED_PACKAGES = [
 ]
 
 
-def gooey_launcher_workaround():
-    """Fix for https://github.com/chriskiehl/Gooey/issues/649"""
-    if os.name != 'nt':
-        return
-
-    try:
-        conda_prefix = os.environ['CONDA_PREFIX']
-    except KeyError:
-        return
-
-    src = os.path.join(conda_prefix, 'Scripts', 'rainbow-script.py')
-    dst = os.path.join(conda_prefix, 'Scripts', 'rainbow')
-    try:
-        shutil.copy2(src, dst)
-    except IOError as e:
-        msg = f'\nCould not apply Gooey Launcher bug workaround, reason: {e}'
-        print(msg)
-
-
 class PostDevelop(develop):
     """Pre-installation for development mode."""
     def run(self):
         develop.run(self)
-        gooey_launcher_workaround()
 
 
 class PostInstall(install):
     """Pre-installation for installation mode."""
     def run(self):
         install.run(self)
-        gooey_launcher_workaround()
 
 
 setup(
