@@ -67,7 +67,7 @@ setup(
     author_email='alphonsg@protonmail.com',
     packages=find_packages(),
     url='https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI',
-    license='LICENSE',
+    license='MIT',
     description=('Automated air liquid interface cell culture analysis using '
                  'deep optical flow.'),
     long_description=open('README.md', encoding='UTF-8').read(),
