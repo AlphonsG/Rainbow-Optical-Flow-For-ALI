@@ -159,6 +159,5 @@ def skip_opt_flow(output_dir, overwrite_flow):
     Returns:
         bool: Whether optical flow computation should be skipped.
     """
-    return (True if not overwrite_flow and os.path.isdir(output_dir) and
-            rainbow.OPTICAL_FLOW_FILENAME in next(os.walk(output_dir))[2]
-            else False)
+    return True if not overwrite_flow and (Path(output_dir) / (
+        OPTICAL_FLOW_FILENAME)).is_file() else False
