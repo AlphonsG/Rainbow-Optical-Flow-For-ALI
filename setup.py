@@ -19,8 +19,9 @@ REQUIRED_PACKAGES = [
     'Gooey',
     'imutils',
     'astropy',
+    'jupyterlab',
     'physt',
-    'jupyterlab'
+    'bumpver'
 ]
 
 
@@ -41,6 +42,7 @@ setup(
     author='Alphons Gwatimba',
     author_email='alphonsg@protonmail.com',
     packages=find_packages(),
+    version="2022.3.15",
     url='https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI',
     license='MIT',
     description=('Automated air liquid interface cell culture analysis using '
