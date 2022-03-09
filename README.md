@@ -3,32 +3,33 @@
 ![](https://img.shields.io/badge/Rainbow-2022.3.15-blue)
 ![](https://img.shields.io/badge/platform-windows%20%7C%20linux%20%7C%20macOS-lightgrey)
 ![](https://img.shields.io/github/languages/top/AlphonsG/Rainbow-Optical-Flow-For-ALI)
-[![Python 3.6+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-360/)
-[![Python package](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/actions/workflows/python-package.yaml/badge.svg?branch=dev2)](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/actions/workflows/python-package.yaml)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Python package](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/actions/workflows/python-package.yaml/badge.svg?branch=main)](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/actions/workflows/python-package.yaml)
 
-![](misc/images/banner_img.png?raw=true "Rainbow")
+<p style="text-align:center;">
+   <img src="https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/raw/main/misc/images/banner_img.png" alt="centered image" />
+</p>
 
-Software for automated Air-Liquid Interface cell culture image analysis using deep optical flow. See [below](#software-paper) for more details.
+Software for automated Air-Liquid Interface cell culture image analysis using deep optical flow. See <a href="#software-paper">below</a> for more details.
 
 ## Table of contents
-1. [Installation](#installation)
-2. [Usage](#usage)
-3. [Additional Information](#additional-information)
-4. [Examples](#examples)
-6. [Community Guidelines](#community-guidelines)
-7. [License](#license)
-9. [Software Paper](#software-paper)
-10. [Our Team](#our-team)
-11. [Acknowledgements](#acknowledgements)
+1. <a href="#installation">Installation</a>
+2. <a href="#usage">Usage</a>
+3. <a href="#additional-information">Additional Information</a>
+4. <a href="#examples">Examples</a>
+5. <a href="#community-guidelines">Community Guidelines</a>
+6. <a href="#license">License</a>
+7. <a href="#software-paper">Software Paper</a>
+8. <a href="#our-team">Our Team</a>
+9. <a href="#acknowledgements">Acknowledgements</a>
 
-## Installation <a name="installation"></a>
+## Installation <a id="installation"></a>
 
 Rainbow can be installed on Linux, Windows & macOS and supports Python 3.8 and up. We recommend installing and running Rainbow within a [virtual environment](https://docs.python.org/3/tutorial/venv.html). Although it is not a requirement, we also recommend installing and running Rainbow on a GPU-enabled system to minimize processing times.
 
-1. Download and install [Python](https://www.python.org/downloads/) (Rainbow was tested using [Python version 3.8.10](https://www.python.org/downloads/release/python-3810/)), [Git](https://git-scm.com/downloads) and [Git LFS](https://git-lfs.github.com/).
+1. Download and install [Python](https://www.python.org/downloads/) (Rainbow was tested using [Python version 3.8.10](https://www.python.org/downloads/release/python-3810/)).
 
 2. Launch the terminal (*Linux* and *macOS* users) or command prompt (*Windows* users). The proceeding commands will be entered into the opened window.
-
 
 3. Create and activate a virtual environment called 'rainbow-env' in your desired directory:
 
@@ -36,6 +37,28 @@ Rainbow can be installed on Linux, Windows & macOS and supports Python 3.8 and u
 
    ```rainbow-env/bin/activate``` (*Linux* and *macOS* users) or ```rainbow-env\Scripts\activate.bat``` (*Windows* users)
 
+4. Install PyTorch by specifying your system configuration using the official [PyTorch get started tool](https://pytorch.org/get-started/locally/) and running the generated command:
+   <p style="text-align:center;">
+    <img src="https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/raw/main/misc/images/pytorch_get_started.png" width="750" alt="centered image" />
+    </p>
+   For example, Windows users without a GPU (i.e. CPU only) will run:
+
+   ```pip install torch torchvision torchaudio```
+
+Next, proceed wth either option A or B.
+### Option A - Install from PyPI
+
+This is the simplest and fastest way to install Rainbow, recommended for normal users.
+
+
+4. Install Rainbow:
+
+   ```pip install rainbow-optical-flow```
+
+
+### Option B - Install from Source
+
+Developers may wish to install Rainbow from source. Please ensure [Git](https://git-scm.com/downloads) and [Git LFS](https://git-lfs.github.com/) are installed before proceeding.
 
 4. Clone this repository into your desired directory:
 
@@ -49,15 +72,7 @@ Rainbow can be installed on Linux, Windows & macOS and supports Python 3.8 and u
 
    ```pip install -e .```
 
-7. Install PyTorch by specifying your system configuration using the official [PyTorch get started tool](https://pytorch.org/get-started/locally/) and running the generated command:
-   <p style="text-align:center;">
-    <img src="misc/images/pytorch_get_started.png" width="750" alt="centered image" />
-    </p>
-   For example, Windows users without a GPU (i.e. CPU only) will run:
-
-   ```pip install torch torchvision torchaudio```
-
-8. Finalize the installation by running the following commands:
+7. Finalize the installation by running the following commands:
 
    ```
    git lfs install
@@ -71,54 +86,54 @@ Rainbow can be installed on Linux, Windows & macOS and supports Python 3.8 and u
 
    ```deactivate```
 
-## Usage <a name="usage"></a>
+## Usage <a id="usage"></a>
 
 ### Command Line Interface (CLI)
 
-Rainbow can be used rainbow through a CLI. Run `rainbow --help` or `rainbow -h` within the `rainbow-env` environment for a list of available command arguments and descriptions.
+Rainbow can be used through a CLI. Run `rainbow --help` or `rainbow -h` within the `rainbow-env` environment for a list of available command arguments and descriptions.
 
-To test rainbow using the provided Air-Liquid Interface cell culture example image series, run the following command from within the cloned repository directory:
+To test rainbow using an example Air-Liquid Interface cell culture image series, clone this repository and then run the following command in the terminal from within the cloned repository directory:
 
 `rainbow examples/example_image_series misc/configs/default_config.yaml`
 
-After processing is finished, a folder containing similar outputs (e.g. a HTML report,  videos, images, CSV files) to those in [this](examples/example_output/(tif)_191018_HNA-ALI_d14.nd2_-_191018_HNA-ALI_d14.nd2_(series_03)0000_etc) example output folder should be generated in `examples/example_image_series`.
+After processing is finished, a folder containing similar outputs (e.g. a HTML report,  videos, images, CSV files) to those in [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_output/(tif)_191018_HNA-ALI_d14.nd2_-_191018_HNA-ALI_d14.nd2_(series_03)0000_etc) example output folder should be generated in [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_image_series) folder.
 ### Graphical User Interface (GUI)
 
 Rainbow can be also be used through a GUI, which can be launched by running the command `rainbow` within the `rainbow-env` environment.
 
-To test rainbow using the provided Air-Liquid Interface cell culture example image series, select `examples/example_image_series` as the input image series and `misc/configs/default_config.yaml`  as the configuration file in the GUI under 'Required Arguments'. After processing is finished, a folder containing similar outputs (e.g. a HTML report,  videos, images, CSV files) to those in [this](examples/example_output/(tif)_191018_HNA-ALI_d14.nd2_-_191018_HNA-ALI_d14.nd2_(series_03)0000_etc) example output folder should be generated in `examples/example_image_series`.
+To test rainbow using an example Air-Liquid Interface cell culture image series, clone this repository and then select [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_image_series) folder as the input image series and [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/blob/main/misc/configs/default_config.yaml) file as the configuration file in the GUI under 'Required Arguments' and then click the 'Start' button. After processing is finished, a folder containing similar outputs (e.g. a HTML report,  videos, images, CSV files) to those in [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_output/(tif)_191018_HNA-ALI_d14.nd2_-_191018_HNA-ALI_d14.nd2_(series_03)0000_etc) example output folder should be generated in [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_image_series) folder.
 
-## Additional Information <a name="additional-information"></a>
+## Additional Information <a id="additional-information"></a>
 
 ### Optical Flow
 
-Rainbow uses a deep learning model called [GMA](https://arxiv.org/abs/2104.02409) to compute the optical flow in an image series. This model can be replaced with any other method for computing optical flow by writing a custom class that implements the [base_model](rainbow/optical_flow/base_model.py) interface ([gma.py](rainbow/optical_flow/gma.py) is an example of that).
+Rainbow uses a deep learning model called [GMA](https://arxiv.org/abs/2104.02409) to compute the optical flow in an image series. This model can be replaced with any other method for computing optical flow by writing a custom class that implements the [base_model](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/blob/main/rainbow/optical_flow/base_model.py) interface ([gma.py](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/blob/main/rainbow/optical_flow/gma.py) is an example of that).
 
 ### Analysis
 
-Rainbow can automatically generate an analysis report after computing the optical flow in an image series. A base report file that can be modified is provided [here](misc/notebooks/report.ipynb) as a Jupyter notebook. The path of a Jupyter notebook needs to specified in the config for automatic report generation (default provided).
+Rainbow can automatically generate an analysis report after computing the optical flow in an image series. A base report file that can be modified is provided [here](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/blob/main/misc/notebooks/report.ipynb) as a Jupyter notebook. The path of a Jupyter notebook needs to specified in the config for automatic report generation (default provided).
 
 ### Scripts
 
-The [scripts](scripts) folder contains python scripts to enable additional functionality such as the ability to combine reports from multiple experiments into one file for simpler viewing and comparisons. Run `python <script-name>.py --help` in the terminal to view the usage instructions for a script.
+The [scripts](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/raw/main/scripts) folder contains python scripts to enable additional functionality such as the ability to combine reports from multiple experiments into one file for simpler viewing and comparisons. Run `python <script-name>.py --help` in the terminal to view the usage instructions for a script.
 
 ### Automated Testing
 
-To perform and check the status of the automated tests locally, run the command `pytest` in the terminal from the root directory of this repository after cloning.
+To perform and check the status of the automated tests locally, run the command `pytest` in the terminal, with Rainbow installed, from the root directory of this repository after cloning.
 
-## Examples <a name="examples"></a>
+## Examples <a id="examples"></a>
 
  Examples of some of the data generated by Rainbow can be seen below.
 
 ### Raw Image Series (left) and Rainbow Optical Flow Visualisation (Right)
 
-<img src="misc/images/raw_vs_flow.gif" width="780"/>
+<img src="https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/raw/main/misc/images/raw_vs_flow.gif" width="780" />
 
 ### Magnitude Heatmaps (Left) and Quiver Plots (Right) Across Image Series
 
 <p float="left">
-  <img src="misc/images/heatmap.gif" width="390" />
-  <img src="misc/images/quiver_plot.gif" width="390" />
+  <img src="https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/raw/main/misc/images/heatmap.gif" width="390" />
+  <img src="https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/raw/main/misc/images/quiver_plot.gif" width="390" />
 </p>
 
 ### Experimental Methods
@@ -134,7 +149,7 @@ Martinovich,K.M. et al. (2017) Conditionally reprogrammed primary airway epithel
 Mitchel,J.A. et al. (2020) In primary airway epithelial cells, the unjamming transition is distinct from the epithelial-to-mesenchymal transition. Nature Communications, 11, 5053.
 Park,J.-A. et al. (2015) Unjamming and cell shape in the asthmatic airway epithelium. Nature Materials, 14, 1040–1048.
 
-## Community guidelines <a name="community-guidelines"></a>
+## Community guidelines <a id="community-guidelines"></a>
 
  Guidelines for third-parties wishing to:
 
@@ -142,13 +157,13 @@ Park,J.-A. et al. (2015) Unjamming and cell shape in the asthmatic airway epithe
 - Report issues or problems with the software
 - Seek support
 
-can be found [here](CONTRIBUTING.md).
+can be found [here](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/blob/main/CONTRIBUTING.md).
 
-## License <a name="license"></a>
+## License <a id="license"></a>
 
-[MIT License](LICENSE)
+[MIT License](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/blob/main/LICENSE)
 
-## Software Paper <a name="software-paper"></a>
+## Software Paper <a id="software-paper"></a>
 
 ### Title
 Rainbow: Automated Air-Liquid Interface Cell Culture Analysis Using Deep Optical Flow
@@ -156,10 +171,10 @@ Rainbow: Automated Air-Liquid Interface Cell Culture Analysis Using Deep Optical
 ### Access
 To be released
 
-## Our Team <a name="our-team"></a>
+## Our Team <a id="our-team"></a>
 [Learn more](https://walyanrespiratory.telethonkids.org.au/our-research/focus-areas/artifical-intelligence/)
 
-## Acknowledgements <a name="acknowledgements"></a>
+## Acknowledgements <a id="acknowledgements"></a>
 
 - https://github.com/philferriere/tfoptflow
 - https://docs.opencv.org/3.4/d4/dee/tutorial_optical_flow.html
