@@ -1,14 +1,15 @@
 import os
 import sys
+import urllib
+import warnings
 from argparse import Namespace
 
 import imutils
 
 from rainbow.optical_flow.base_model import BaseModel
 
-import torch
-
 MIN_DIMS = (284, 121)
+CHECKPOINTS_BASE_URL = 'https://github.com/AlphonsG/GMA/raw/main/checkpoints/'
 
 
 class GMA(BaseModel):
@@ -20,24 +21,34 @@ class GMA(BaseModel):
     def __init__(self, model_cfg, reuse_model):
         """See base class."""
         gma_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)),
-                               'third_party', 'gma')
-        sys.path.insert(1, os.path.join(gma_dir, 'core'))
+                               'third_party', 'gma', 'core')
+        sys.path.insert(1, gma_dir)
         from network import RAFTGMA
         from utils.utils import InputPadder
+        import torch
         self.InputPadder = InputPadder
-
+        self.torch = torch
         args = Namespace(**model_cfg)
-        model = torch.nn.DataParallel(RAFTGMA(args))
+        model = self.torch.nn.DataParallel(RAFTGMA(args))
 
-        if not os.path.isfile(model_cfg['model']):
-            model_cfg['model'] = os.path.join(gma_dir, 'checkpoints',
-                                              model_cfg['model'])
-        if not os.path.isfile(model_cfg['model']):
-            raise FileNotFoundError('Could not locate checkpoint '
-                                    f'{model_cfg["model"]}.')
+        if os.path.isfile(model_cfg['model']):
+            model.load_state_dict(self.torch.load(model_cfg['model'],
+                                  map_location=self.torch.device(
+                                      model_cfg['device'])))
+        else:
+            checkpoint_url = CHECKPOINTS_BASE_URL + model_cfg['model']
+            try:
+                model.load_state_dict(self.torch.hub.load_state_dict_from_url(
+                    checkpoint_url, map_location=self.torch.device(
+                        model_cfg['device'])))
+            except urllib.error.URLError as e:
+                msg = ('\nERROR: The optical flow model checkpoint specified '
+                       f'in the YAML config file ({model_cfg["model"]}) is '
+                       'not a local file, and the attempt to download it '
+                       f'from {CHECKPOINTS_BASE_URL} failed ({str(e)}).')
+                print(msg)
+                exit(1)
 
-        model.load_state_dict(torch.load(model_cfg['model'],
-                              map_location=torch.device(model_cfg['device'])))
         model = model.module
         model.to(model_cfg['device'])
         model.eval()
@@ -67,7 +78,7 @@ class GMA(BaseModel):
                     img = imutils.resize(img, **kv)
             imgs[i] = img
 
-        imgs = [torch.from_numpy(img).permute(2, 0, 1).float()[None].to(
+        imgs = [self.torch.from_numpy(img).permute(2, 0, 1).float()[None].to(
                 self.model_cfg['device']) for img in imgs]
         imgs = self.get_img_pairs(imgs)
 
@@ -76,9 +87,11 @@ class GMA(BaseModel):
         imgs = [(padder.pad(img1, img2)) for img1, img2 in imgs]
 
         preds = []
-        with torch.no_grad():
+        with self.torch.no_grad():
             for img1, img2 in imgs:
-                _, flow = self.model(img1, img2, iters=12, test_mode=True)
+                with warnings.catch_warnings():
+                    warnings.filterwarnings('ignore', category=UserWarning)
+                    _, flow = self.model(img1, img2, iters=12, test_mode=True)
                 preds.append(flow[0].permute(1, 2, 0).cpu().numpy())
 
         return preds
