@@ -24,7 +24,9 @@ opt_flow_model: gma
 # Learning to Estimate Hidden Motions with Global Motion Aggregation
 # https://github.com/zacjiang/GMA
 gma:
-  # restore checkpoint (default = gma-sintel.pth)
+  # restore checkpoint
+  # specify local file or choose from gma-chairs.pth, gma-kitti.pth,
+  # gma-sintel.pth or gma-things.pth
   model: gma-sintel.pth
   # define model name
   model_name: GMA
