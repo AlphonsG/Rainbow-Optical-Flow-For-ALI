@@ -2,7 +2,7 @@ import os
 from multiprocessing import Process, Queue
 from pathlib import Path
 
-import rainbow
+from rainbow import OPTICAL_FLOW_FILENAME
 from rainbow.data_analysis import analyze_data
 from rainbow.optical_flow.optical_flow import compute_optical_flow
 from rainbow.util import load_nd2_imgs, load_std_imgs
