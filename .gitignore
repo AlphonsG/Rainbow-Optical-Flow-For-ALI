@@ -27,3 +27,5 @@ tests/heavy/__pycache__/
 tests/__pycache__/
 
 tests/light/__pycache__/
+
+rainbow_optical_flow.egg-info/
