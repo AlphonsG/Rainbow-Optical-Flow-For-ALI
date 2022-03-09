@@ -1,0 +1,2 @@
+recursive-exclude tests *
+recursive-include rainbow/optical_flow/third_party/gma/core *

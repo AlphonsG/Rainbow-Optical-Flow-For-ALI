@@ -1,6 +1,4 @@
 from setuptools import find_packages, setup
-from setuptools.command.develop import develop
-from setuptools.command.install import install
 
 REQUIRED_PACKAGES = [
     'moviepy',
@@ -24,30 +22,39 @@ REQUIRED_PACKAGES = [
     'bumpver'
 ]
 
-
-class PostDevelop(develop):
-    """Pre-installation for development mode."""
-    def run(self):
-        develop.run(self)
-
-
-class PostInstall(install):
-    """Pre-installation for installation mode."""
-    def run(self):
-        install.run(self)
-
+CLASSIFIERS = [
+    'License :: OSI Approved :: MIT License',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
+    'Operating System :: OS Independent',
+    'Operating System :: Microsoft :: Windows',
+    'Operating System :: MacOS',
+    'Operating System :: POSIX :: Linux',
+    'Development Status :: 5 - Production/Stable',
+    'Intended Audience :: Developers',
+    'Intended Audience :: End Users/Desktop',
+    'Intended Audience :: Science/Research',
+    'Natural Language :: English',
+    'Topic :: Scientific/Engineering',
+    'Topic :: Scientific/Engineering :: Artificial Intelligence',
+    'Topic :: Scientific/Engineering :: Bio-Informatics',
+    'Topic :: Scientific/Engineering :: Image Processing',
+    'Topic :: Scientific/Engineering :: Visualization',
+]
 
 setup(
-    name='rainbow',
+    name='rainbow-optical-flow',
     author='Alphons Gwatimba',
-    author_email='alphonsg@protonmail.com',
-    packages=find_packages(),
+    author_email='0go0vdp95@mozmail.com',
+    packages=find_packages(exclude=['tests*']),
     version="2022.3.15",
     url='https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI',
     license='MIT',
+    classifiers=CLASSIFIERS,
     description=('Automated air liquid interface cell culture analysis using '
                  'deep optical flow.'),
     long_description=open('README.md', encoding='UTF-8').read(),
+    long_description_content_type='text/markdown',
     install_requires=REQUIRED_PACKAGES,
     entry_points={
         'console_scripts': [
@@ -55,10 +62,5 @@ setup(
         ]
     },
     python_requires='>=3.8',
-    cmdclass={
-        'develop': PostDevelop,
-        'install': PostInstall,
-    },
-    use_calver=True,
-    setup_requires=['calver']
+    include_package_data=True
 )
