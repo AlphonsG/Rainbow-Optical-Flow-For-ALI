@@ -1,6 +1,6 @@
 # Rainbow
 
-![](https://img.shields.io/badge/Rainbow-2022.3.27-blue)
+![](https://img.shields.io/badge/Rainbow-2022.3.28-blue)
 ![](https://img.shields.io/badge/platform-windows%20%7C%20linux%20%7C%20macOS-lightgrey)
 ![](https://img.shields.io/github/languages/top/AlphonsG/Rainbow-Optical-Flow-For-ALI)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)

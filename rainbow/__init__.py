@@ -2,7 +2,7 @@
 #
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
-__version__ = "2022.3.16"
+__version__ = "2022.3.28"
 
 from rainbow.optical_flow.optical_flow import OPTICAL_FLOW_FILENAME
 
