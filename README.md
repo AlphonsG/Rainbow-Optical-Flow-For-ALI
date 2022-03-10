@@ -1,6 +1,6 @@
 # Rainbow
 
-![](https://img.shields.io/badge/Rainbow-2022.3.16-blue)
+![](https://img.shields.io/badge/Rainbow-2022.3.27-blue)
 ![](https://img.shields.io/badge/platform-windows%20%7C%20linux%20%7C%20macOS-lightgrey)
 ![](https://img.shields.io/github/languages/top/AlphonsG/Rainbow-Optical-Flow-For-ALI)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -35,7 +35,9 @@ Rainbow can be installed on Linux, Windows & macOS and supports Python 3.8 and u
 
    ```python -m venv rainbow-env```
 
-   ```rainbow-env/bin/activate``` (*Linux* and *macOS* users) or ```rainbow-env\Scripts\activate.bat``` (*Windows* users)
+   ```. rainbow-env/bin/activate``` (*Linux* and *macOS* users) or ```rainbow-env\Scripts\activate.bat``` (*Windows* users)
+
+   ```python -m pip install -U pip```
 
 4. Install PyTorch by specifying your system configuration using the official [PyTorch get started tool](https://pytorch.org/get-started/locally/) and running the generated command:
    <p style="text-align:center;">
@@ -82,26 +84,28 @@ Developers may wish to install Rainbow from source. Please ensure [Git](https://
    git submodule update --init --recursive
    ```
 
-- Note: Virtual environment can be deactivated using:
+- Note:
+  - Virtual environment can be deactivated using:
 
-   ```deactivate```
+      ```deactivate```
+  - If Rainbow fails to install on Linux, it may be because `wxpython` could not be built (look for clues in the error messages printed on the terminal e.g. "Running setup.py install for wxpython ... error"). Instead, try installing `wxpython` first by following [these](https://wxpython.org/pages/downloads/) instructions (specifically "Yes, we have Linux Wheels. Sort of.") and then attempt to install rainbow again via ```pip install rainbow-optical-flow``` (option A) or ```pip install -e .``` (option B).
 
 ## Usage <a id="usage"></a>
 
 ### Command Line Interface (CLI)
 
-Rainbow can be used through a CLI. Run `rainbow --help` or `rainbow -h` within the `rainbow-env` environment for a list of available command arguments and descriptions.
+Once installed, Rainbow can be used through a CLI. Run `rainbow --help` or `rainbow -h` within the `rainbow-env` environment for a list of available command arguments and descriptions.
 
-To test rainbow using an example Air-Liquid Interface cell culture image series, clone this repository and then run the following command in the terminal from within the cloned repository directory:
+To test rainbow using an example Air-Liquid Interface cell culture image series, run the following command in the terminal after following the instructions under option B of the <a href="#installation">installation</a> procedure (except for step 6):
 
 `rainbow examples/example_image_series misc/configs/default_config.yaml`
 
 After processing is finished, a folder containing similar outputs (e.g. a HTML report,  videos, images, CSV files) to those in [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_output/(tif)_191018_HNA-ALI_d14.nd2_-_191018_HNA-ALI_d14.nd2_(series_03)0000_etc) example output folder should be generated in [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_image_series) folder.
 ### Graphical User Interface (GUI)
 
-Rainbow can be also be used through a GUI, which can be launched by running the command `rainbow` within the `rainbow-env` environment.
+Once installed, Rainbow can be be used through a GUI, which can be launched by running the command `rainbow` within the `rainbow-env` environment.
 
-To test rainbow using an example Air-Liquid Interface cell culture image series, clone this repository and then select [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_image_series) folder as the input image series and [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/blob/main/misc/configs/default_config.yaml) file as the configuration file in the GUI under 'Required Arguments' and then click the 'Start' button. After processing is finished, a folder containing similar outputs (e.g. a HTML report,  videos, images, CSV files) to those in [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_output/(tif)_191018_HNA-ALI_d14.nd2_-_191018_HNA-ALI_d14.nd2_(series_03)0000_etc) example output folder should be generated in [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_image_series) folder.
+To test rainbow using an example Air-Liquid Interface cell culture image series, follow the instructions under option B of the <a href="#installation">installation</a> procedure (except for step 6) and then select [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_image_series) folder as the input image series and [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/blob/main/misc/configs/default_config.yaml) file as the configuration file in the GUI under 'Required Arguments' and click the 'Start' button. After processing is finished, a folder containing similar outputs (e.g. a HTML report,  videos, images, CSV files) to those in [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_output/(tif)_191018_HNA-ALI_d14.nd2_-_191018_HNA-ALI_d14.nd2_(series_03)0000_etc) example output folder should be generated in [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_image_series) folder.
 
 ## Additional Information <a id="additional-information"></a>
 
