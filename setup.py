@@ -63,6 +63,6 @@ setup(
         ]
     },
     python_requires='>=3.8',
-    include_package_data=True
+    include_package_data=True,
     setup_requires=['wheel', 'setup_requires']
 )
