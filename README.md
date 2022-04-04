@@ -1,9 +1,10 @@
 # Rainbow
 
-![](https://img.shields.io/badge/Rainbow-2022.4.6-blue)
+[![PyPI version](https://badge.fury.io/py/rainbow-optical-flow.svg)](https://pypi.org/project/rainbow-optical-flow/)
 ![](https://img.shields.io/badge/platform-windows%20%7C%20linux%20%7C%20macOS-lightgrey)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Python package](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/actions/workflows/python-package.yaml/badge.svg?branch=main)](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/actions/workflows/python-package.yaml)
+[![GitHub license](https://img.shields.io/github/license/AlphonsG/Rainbow-Optical-Flow-For-ALI)](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/blob/main/LICENSE)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.04080/status.svg)](https://doi.org/10.21105/joss.04080)
 
 <p style="text-align:center;">
