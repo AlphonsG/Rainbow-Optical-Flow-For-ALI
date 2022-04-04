@@ -2,6 +2,8 @@
 #
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
+__version__ = "2022.4.5"
+
 from rainbow.optical_flow.optical_flow import OPTICAL_FLOW_FILENAME
 
 RAW_IMGS_DIR_NAME = 'Raw_Images'

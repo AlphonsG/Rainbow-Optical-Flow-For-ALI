@@ -2,7 +2,7 @@ import os
 from multiprocessing import Process, Queue
 from pathlib import Path
 
-import rainbow
+from rainbow import OPTICAL_FLOW_FILENAME
 from rainbow.data_analysis import analyze_data
 from rainbow.optical_flow.optical_flow import compute_optical_flow
 from rainbow.util import load_nd2_imgs, load_std_imgs
@@ -159,8 +159,5 @@ def skip_opt_flow(output_dir, overwrite_flow):
     Returns:
         bool: Whether optical flow computation should be skipped.
     """
-    if not overwrite_flow and os.path.isdir(output_dir) and (
-            rainbow.OPTICAL_FLOW_FILENAME in next(os.walk(output_dir))[2]):
-        return True
-    else:
-        return False
+    return True if not overwrite_flow and (Path(output_dir) / (
+        OPTICAL_FLOW_FILENAME)).is_file() else False

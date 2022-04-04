@@ -1,12 +1,6 @@
-import os
-import shutil
-
 from setuptools import find_packages, setup
-from setuptools.command.develop import develop
-from setuptools.command.install import install
 
 REQUIRED_PACKAGES = [
-    'pyparsing < 3',
     'moviepy',
     'matplotlib',
     'natsort',
@@ -23,63 +17,52 @@ REQUIRED_PACKAGES = [
     'Gooey',
     'imutils',
     'astropy',
-    'physt'
+    'jupyterlab',
+    'physt',
+    'bumpver',
+    'Pillow < 9.1.0 ; platform_system=="Darwin"'
 ]
 
-
-def gooey_launcher_workaround():
-    """Fix for https://github.com/chriskiehl/Gooey/issues/649"""
-    if os.name != 'nt':
-        return
-
-    try:
-        conda_prefix = os.environ['CONDA_PREFIX']
-    except KeyError:
-        return
-
-    src = os.path.join(conda_prefix, 'Scripts', 'rainbow-script.py')
-    dst = os.path.join(conda_prefix, 'Scripts', 'rainbow')
-    try:
-        shutil.copy2(src, dst)
-    except IOError as e:
-        msg = f'\nCould not apply Gooey Launcher bug workaround, reason: {e}'
-        print(msg)
-
-
-class PostDevelop(develop):
-    """Pre-installation for development mode."""
-    def run(self):
-        develop.run(self)
-        gooey_launcher_workaround()
-
-
-class PostInstall(install):
-    """Pre-installation for installation mode."""
-    def run(self):
-        install.run(self)
-        gooey_launcher_workaround()
-
+CLASSIFIERS = [
+    'License :: OSI Approved :: MIT License',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
+    'Operating System :: OS Independent',
+    'Operating System :: Microsoft :: Windows',
+    'Operating System :: MacOS',
+    'Operating System :: POSIX :: Linux',
+    'Development Status :: 5 - Production/Stable',
+    'Intended Audience :: Developers',
+    'Intended Audience :: End Users/Desktop',
+    'Intended Audience :: Science/Research',
+    'Natural Language :: English',
+    'Topic :: Scientific/Engineering',
+    'Topic :: Scientific/Engineering :: Artificial Intelligence',
+    'Topic :: Scientific/Engineering :: Bio-Informatics',
+    'Topic :: Scientific/Engineering :: Image Processing',
+    'Topic :: Scientific/Engineering :: Visualization',
+]
 
 setup(
-    name='rainbow',
-    version='0.1.0',
+    name='rainbow-optical-flow',
     author='Alphons Gwatimba',
-    author_email='alphonsg@protonmail.com',
-    packages=find_packages(),
+    author_email='0go0vdp95@mozmail.com',
+    packages=find_packages(exclude=['tests*']) + ['misc'],
+    version="2022.4.5",
     url='https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI',
-    license='LICENSE',
+    license='MIT',
+    classifiers=CLASSIFIERS,
     description=('Automated air liquid interface cell culture analysis using '
                  'deep optical flow.'),
     long_description=open('README.md', encoding='UTF-8').read(),
+    long_description_content_type='text/markdown',
     install_requires=REQUIRED_PACKAGES,
     entry_points={
         'console_scripts': [
             'rainbow = rainbow.__main__:main'
         ]
     },
-    python_requires='>=3.6',
-    cmdclass={
-        'develop': PostDevelop,
-        'install': PostInstall,
-    }
+    python_requires='>=3.8',
+    include_package_data=True,
+    setup_requires=['wheel', 'setuptools']
 )
