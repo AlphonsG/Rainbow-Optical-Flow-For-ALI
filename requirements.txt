@@ -9,6 +9,7 @@ Babel==2.9.1
 backcall==0.2.0
 black==22.1.0
 bleach==4.1.0
+build==0.7.0
 bumpver==2022.1115
 certifi==2021.10.8
 cffi==1.15.0
@@ -75,6 +76,7 @@ pandocfilters==1.5.0
 parso==0.8.3
 pathlib2==2.3.7.post1
 pathspec==0.9.0
+pep517==0.12.0
 physt==0.5.3
 pickleshare==0.7.5
 Pillow==9.0.1
