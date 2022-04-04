@@ -48,7 +48,7 @@ setup(
     author='Alphons Gwatimba',
     author_email='0go0vdp95@mozmail.com',
     packages=find_packages(exclude=['tests*']) + ['misc'],
-    version="2022.4.4",
+    version="2022.4.5",
     url='https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI',
     license='MIT',
     classifiers=CLASSIFIERS,
