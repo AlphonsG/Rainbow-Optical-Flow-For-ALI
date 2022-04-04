@@ -19,7 +19,8 @@ REQUIRED_PACKAGES = [
     'astropy',
     'jupyterlab',
     'physt',
-    'bumpver'
+    'bumpver',
+    'Pillow < 9.1.0 ; platform_system=="Darwin"'
 ]
 
 CLASSIFIERS = [
