@@ -20,7 +20,8 @@ REQUIRED_PACKAGES = [
     'jupyterlab',
     'physt',
     'bumpver',
-    'Pillow < 9.1.0 ; platform_system=="Darwin"'
+    'Pillow < 9.1.0 ; platform_system=="Darwin"',
+    'pytest-cov'
 ]
 
 CLASSIFIERS = [
@@ -41,6 +42,19 @@ CLASSIFIERS = [
     'Topic :: Scientific/Engineering :: Bio-Informatics',
     'Topic :: Scientific/Engineering :: Image Processing',
     'Topic :: Scientific/Engineering :: Visualization',
+]
+
+KEYWORDS = [
+    'bioinformatics',
+    'deep learning',
+    'biology',
+    'optical flow',
+    'image analysis',
+    'bioimage informatics',
+    'artificial intelligence',
+    'vision transformers',
+    'visualization',
+    'image processing'
 ]
 
 setup(
@@ -64,5 +78,6 @@ setup(
     },
     python_requires='>=3.8',
     include_package_data=True,
-    setup_requires=['wheel', 'setuptools']
+    setup_requires=['wheel', 'setuptools'],
+    keywords=KEYWORDS
 )
