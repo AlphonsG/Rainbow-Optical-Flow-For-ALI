@@ -19,7 +19,7 @@ nd2:
 mpp: 0.31302569743655434
 
 # model to use when computing optical flow
-opt_flow_model: gma
+optical_flow_model: gma
 
 # Learning to Estimate Hidden Motions with Global Motion Aggregation
 # https://github.com/zacjiang/GMA
