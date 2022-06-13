@@ -5,6 +5,17 @@ from gooey import Gooey, GooeyParser
 
 from rainbow.file_processing import process_files
 
+# check if pytorch is installed
+try:
+    import torch
+except ModuleNotFoundError:
+    msg = ('Rainbow cannot run because PyTorch is currently '
+           'not installed. Please install Pytorch by following step 4 of '
+           'Rainbow\'s installation instructions: https://github.com/AlphonsG/'
+           'Rainbow-Optical-Flow-For-ALI#installation-.')
+    print(msg)
+    exit(1)
+
 import yaml
 
 
@@ -53,16 +64,6 @@ def process_args():
 
 
 def main():
-    # check if pytorch is installed
-    try:
-        import torch
-    except ModuleNotFoundError:
-        msg = ('Rainbow cannot run because PyTorch is currently '
-               'not installed. Please install Pytorch by following the '
-               'instructions here: https://pytorch.org/get-started/locally/.')
-        print(msg)
-        exit(1)
-
     args = process_args()
     assert os.path.isdir(args.root_dir), ('Invalid root directory path '
                                           'provided.')
