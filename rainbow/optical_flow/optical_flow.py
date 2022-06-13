@@ -4,52 +4,7 @@ import cv2
 
 import numpy as np
 
-import rainbow
-from rainbow.optical_flow.model_factory import ModelFactory
-from rainbow.util import (cleanup_dir, save_img_ser, save_img_ser_metadata,
-                          save_optical_flow)
-
 OPTICAL_FLOW_FILENAME = 'optical_flow.npy'
-
-
-def compute_optical_flow(imgs, output_dir, model_name, model_config,
-                         reuse_model=True, save_raw_imgs=True,
-                         overwrite_flow=False):
-    """Computes the optical flow.
-
-    Computes the optical flow in an image sequence using the chosen optical
-    flow model and saves the flow as a file in output_dir.
-
-    Args:
-        imgs (list): A list of images.
-        output_dir (string): The path to the output directory.
-        model_name (string): The name of the optical flow model to use.
-        model_config (dict): The configuration of the optical flow model.
-        reuse_model (bool, optional): If True, multiple calls of this function
-            with the same model name will use the same optical model instance.
-            Defaults to True.
-        save_raw_imgs (bool, optional): If True, saves the image sequence in
-            output_dir. Defaults to True.
-        overwrite_flow (bool, optional): If True, will re-compute optical flow
-            even if the flow file already exists in output_dir.
-            Defaults to False.
-    """
-    mdl_fcty = ModelFactory()
-    model = mdl_fcty.get_model(model_name, model_config, reuse_model)
-    preds = model.predict(imgs)
-
-    if not (os.path.isfile(os.path.join(output_dir,
-            OPTICAL_FLOW_FILENAME)) and not overwrite_flow):
-        if not cleanup_dir(output_dir):
-            return
-        os.mkdir(output_dir)
-        save_optical_flow(preds, output_dir)
-
-        if save_raw_imgs:  # TODO remove
-            raw_imgs_dir = os.path.join(output_dir, rainbow.RAW_IMGS_DIR_NAME)
-            os.mkdir(raw_imgs_dir)
-            save_img_ser(imgs, raw_imgs_dir)
-            save_img_ser_metadata(imgs, output_dir)
 
 
 def flow_to_img(flow, normalize=True, info=None, flow_mag_max=None):

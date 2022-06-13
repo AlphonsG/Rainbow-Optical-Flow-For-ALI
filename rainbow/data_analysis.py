@@ -20,32 +20,7 @@ from physt import polar
 
 import scipy.stats
 
-SENTINEL = 'STOP'
 NOTEBOOK_DIR = 'misc/notebooks'
-
-
-def analyze_data(queue, config):
-    """Performs data analysis.
-
-    Receives directories from worker processes via queue and generates an
-    analysis report of data stored in those directories.
-
-    Args:
-        queue (multiprocessing.Queue): The queue that will be used to receive
-            directory paths from workers.
-        config (string): The path to a .yaml configuration file.
-
-    Returns:
-        int: 0 when data analysis has successfully finished.
-    """
-    while True:
-        output_dir = queue.get()
-        if output_dir == SENTINEL:
-            # put it back so that other consumers see it
-            queue.put(SENTINEL)
-            return 0
-
-        gen_report(output_dir, config['report_path'])
 
 
 def gen_report(output_dir, report_path, html=True):
