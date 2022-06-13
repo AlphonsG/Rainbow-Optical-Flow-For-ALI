@@ -4,12 +4,13 @@
 # https://opensource.org/licenses/MIT
 import os
 import shutil
+import warnings
 from pathlib import Path
 
 import pytest
 
-from rainbow.file_processing import get_output_dir, process_files
-from rainbow.util import load_nd2_imgs, load_std_imgs
+from rainbow.file_processing import process_files
+from rainbow.optical_flow.optical_flow import OPTICAL_FLOW_FILENAME
 
 from tests import IMG_SER_DIR, ND2_PATH
 
@@ -37,7 +38,7 @@ def config():
                     'naming_axs': 'v'
                     },
             'mpp': 0.31302569743655434,
-            'opt_flow_model': 'gma',
+            'optical_flow_model': 'gma',
             'gma': {'model': 'gma-sintel.pth',
                     'model_name': 'GMA',
                     'num_heads': 1,
@@ -60,26 +61,44 @@ def img_seqs(tmpdir):
         shutil.rmtree(os.path.join(root_dir, tmp_dir))
 
 
-def test_process_files(img_dir, config):
-    num_wrkrs, subdirs, overwrite_flow = 1, False, True
-    process_files(img_dir, config, num_wrkrs, subdirs, overwrite_flow)
+def test_process_files(img_dir, config):  # TODO test subdirs
+    num_wrkrs, use_existing_flow = 1, True
+    process_files(img_dir, config, num_wrkrs,
+                  use_existing_flow=use_existing_flow)
+    assert len(next(os.walk(img_dir))[1]) != 0  # output dirs created
     output_dir = [os.path.join(img_dir, d) for d in next(os.walk(
-                  img_dir))[1]][0]
+        img_dir))[1]][0]
     _, dirs, files = next(os.walk(output_dir))
     assert len(dirs) != 0
     assert len(files) != 0
     file_exts = [Path(f).suffix for f in files]
     assert '.html' in file_exts
     assert '.ipynb' in file_exts
+    saved_flow1 = [os.path.join(output_dir, f) for f in next(os.walk(
+        output_dir))[2] if f == OPTICAL_FLOW_FILENAME]
+    assert len(saved_flow1) == 1
+    saved_flow1_mtime = os.path.getmtime(saved_flow1[0])
 
+    analyze_data = False
+    num_wrkrs = 2
+    with warnings.catch_warnings():
+        warnings.filterwarnings('ignore', category=UserWarning)
+        process_files(img_dir, config, num_wrkrs,
+                      use_existing_flow=use_existing_flow,
+                      analyze_data=analyze_data)
+    saved_flow2 = [os.path.join(output_dir, f) for f in next(os.walk(
+        output_dir))[2] if f == OPTICAL_FLOW_FILENAME]
+    assert len(saved_flow2) == 1
+    assert saved_flow1_mtime == os.path.getmtime(saved_flow2[0])
 
-def test_get_output_dir(img_seqs, nd2_config):
-    imgs = load_std_imgs(img_seqs)
-    output_dir = get_output_dir(imgs, nd2_config)
-    os.mkdir(output_dir)
-    assert len(next(os.walk(img_seqs))[1]) == 1
-
-    imgs = load_nd2_imgs(ND2_PATH, nd2_config['nd2'])
-    output_dir = get_output_dir(imgs[0], nd2_config)
-    os.mkdir(output_dir)
-    assert len(next(os.walk(img_seqs))[1]) == 1
+    use_existing_flow = False
+    num_wrkrs = 0
+    with warnings.catch_warnings():
+        warnings.filterwarnings('ignore', category=UserWarning)
+        process_files(img_dir, config, num_wrkrs,
+                      use_existing_flow=use_existing_flow,
+                      analyze_data=analyze_data)
+    saved_flow3 = [os.path.join(output_dir, f) for f in next(os.walk(
+        output_dir))[2] if f == OPTICAL_FLOW_FILENAME]
+    assert len(saved_flow3) == 1
+    assert saved_flow1_mtime != os.path.getmtime(saved_flow3[0])

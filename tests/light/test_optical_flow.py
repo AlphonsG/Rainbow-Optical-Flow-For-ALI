@@ -6,22 +6,11 @@ import numpy as np
 
 import pytest
 
-from rainbow.optical_flow.base_model import BaseModel
 from rainbow.optical_flow.model_factory import ModelFactory
-from rainbow.optical_flow.optical_flow import flow_to_img
+from rainbow.optical_flow.optical_flow import flow_to_img, get_img_pairs
 from rainbow.util import load_std_imgs
 
 from tests import IMG_SER_DIR
-
-
-class TestModel(BaseModel):
-    def __init__(self):
-        pass
-
-
-@pytest.fixture
-def test_model():
-    return TestModel()
 
 
 @pytest.fixture
@@ -39,28 +28,28 @@ def gma_cfg():
 def test_model_factory():
     model_factory = ModelFactory()
     with pytest.raises(ValueError):
-        model_factory.get_model('', None, False)
+        model_factory.get_model('', None)
 
 
 def test_gma_instantiation(gma_cfg):
     model_factory = ModelFactory()
-    model1 = model_factory.get_model('gma', gma_cfg, True)
+    model1 = model_factory.get_model('gma', gma_cfg)
     assert model1 is not None
     with pytest.raises(ValueError):
-        model_factory.get_model('gma', gma_cfg, False)
+        model_factory.get_model('', gma_cfg)
 
-    model2 = model_factory.get_model('gma', gma_cfg, True)
-    assert model1 is model2
+    model2 = model_factory.get_model('gma', gma_cfg)
+    assert model1 is not model2
 
 
-def test_base_model_get_img_pairs(test_model):
+def test_get_img_pairs():
     imgs = load_std_imgs(IMG_SER_DIR)
-    img_pairs = test_model.get_img_pairs(imgs)
+    img_pairs = get_img_pairs(imgs)
     assert len(img_pairs) == 2
-    assert np.array_equal(img_pairs[0][0], imgs[0])
-    assert np.array_equal(img_pairs[0][1], imgs[1])
-    assert np.array_equal(img_pairs[1][0], imgs[1])
-    assert np.array_equal(img_pairs[1][1], imgs[2])
+    assert np.array_equal(img_pairs[0][0], imgs[0][0])
+    assert np.array_equal(img_pairs[0][1], imgs[1][0])
+    assert np.array_equal(img_pairs[1][0], imgs[1][0])
+    assert np.array_equal(img_pairs[1][1], imgs[2][0])
 
 
 def test_flow_to_img():

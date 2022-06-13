@@ -11,10 +11,8 @@ import numpy as np
 
 from pims import Frame
 
-from rainbow.optical_flow.optical_flow import OPTICAL_FLOW_FILENAME
-from rainbow.util import (apply_metadata, comb_imgs, load_optical_flow,
-                          load_std_imgs, save_img_ser, save_img_ser_metadata,
-                          save_optical_flow, video_reshape)
+from rainbow.util import (apply_metadata, comb_imgs, load_std_imgs,
+                          save_img_ser, save_img_ser_metadata, video_reshape)
 
 from tests import IMG_SER_DIR, VID_PATH
 
@@ -29,7 +27,7 @@ def test_comb_imgs():
 def test_save_img_ser_without_metadata_name(tmpdir):
     imgs = load_std_imgs(IMG_SER_DIR)
     save_img_ser(imgs, tmpdir, False)
-    saved_imgs = next(os.walk(tmpdir))[2]
+    saved_imgs = sorted(next(os.walk(tmpdir))[2])
     assert len(saved_imgs) == 3
     for i, saved_img in enumerate(saved_imgs):
         assert saved_img == f'Image_{i}.png'
@@ -39,24 +37,11 @@ def test_save_img_ser_without_metadata_name(tmpdir):
 def test_save_img_ser_with_metadata_name(tmpdir):
     imgs = load_std_imgs(IMG_SER_DIR)
     save_img_ser(imgs, tmpdir)
-    saved_imgs = next(os.walk(tmpdir))[2]
+    saved_imgs = sorted(next(os.walk(tmpdir))[2])
     assert len(saved_imgs) == 3
     for i, saved_img in enumerate(saved_imgs, start=1):
         assert saved_img == f'test_frame_{i}.png'
         assert cv2.imread(os.path.join(tmpdir, saved_img)) is not None
-
-
-def test_save_optical_flow(tmpdir):
-    preds = np.ones((10, 10, 2))
-    save_optical_flow(preds, tmpdir)
-    assert next(os.walk(tmpdir))[2][0] == OPTICAL_FLOW_FILENAME
-
-
-def test_load_optical_flow(tmpdir):
-    preds = np.ones((10, 10, 2))
-    save_optical_flow(preds, tmpdir)
-    saved_preds = os.path.join(tmpdir, next(os.walk(tmpdir))[2][0])
-    assert np.array_equal(preds, load_optical_flow(saved_preds))
 
 
 def test_apply_metadata():
