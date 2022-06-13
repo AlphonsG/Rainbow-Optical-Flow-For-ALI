@@ -32,13 +32,13 @@ Rainbow can be installed on Linux, Windows & macOS and supports Python 3.8 and a
 
 2. Launch the terminal (*Linux* and *macOS* users) or command prompt (*Windows* users). The proceeding commands will be entered into the opened window<sup>1</sup>.
 
-3. (Optional but recommended) Create and activate a virtual environment called 'rainbow-env' in your desired directory:
+3. Create and activate a virtual environment called 'rainbow-env' in your desired directory:
 
    ```python -m venv rainbow-env```
 
    ```. rainbow-env/bin/activate``` (*Linux* and *macOS* users) or ```rainbow-env\Scripts\activate.bat``` (*Windows* users)
 
-   ```python -m pip install -U pip```
+   ```pip install --upgrade pip```
 
 4. Install PyTorch by specifying your system configuration using the official [PyTorch get started tool](https://pytorch.org/get-started/locally/) and running the generated command:
    <p style="text-align:center;">
@@ -73,30 +73,24 @@ Developers may wish to install Rainbow from source. Please ensure [Git](https://
 
 7. Install Rainbow:
 
-   ```pip install -e .```
-
-8. Finalize the installation by running the following commands:
-
    ```
-   git submodule sync
-
    git submodule update --init --recursive
+   pip install -e .
    ```
 
 Notes:
   - <sup>1</sup>Confirm the correct python version for Rainbow has been installed using the `python -V` command in the terminal. If this command does not report the correct python version, try using the `python3 -v` command instead. If the second command produces the expected result, replace all `python` and `pip` commands in this guide with `python3` and `pip3`, respectively.
 
+  - If Rainbow fails to install on Linux, it may be because `wxpython` could not be built (look for clues in the error messages printed on the terminal e.g. "Running setup.py install for wxpython ... error"). Instead, try installing `wxpython` first by following [these](https://wxpython.org/pages/downloads/) instructions (specifically, "Yes, we have Linux Wheels. Sort of." section). You can also try installing `libgtk-3-dev` first by running `sudo apt install libgtk-3-dev`. Then, attempt to install Rainbow again via ```pip install rainbow-optical-flow``` (option A) or ```pip install -e .``` (option B).
+
   - The virtual environment can be deactivated using:
 
       ```deactivate```
-
-  - If Rainbow fails to install on Linux, it may be because `wxpython` could not be built (look for clues in the error messages printed on the terminal e.g. "Running setup.py install for wxpython ... error"). Instead, try installing `wxpython` first by following [these](https://wxpython.org/pages/downloads/) instructions (specifically "Yes, we have Linux Wheels. Sort of.") and then attempt to install Rainbow again via ```pip install rainbow-optical-flow``` (option A) or ```pip install -e .``` (option B).
-
 ## Usage <a id="usage"></a>
 
 ### Command Line Interface (CLI)
 
-Once installed, Rainbow can be used through a CLI. Run `rainbow --help` or `rainbow -h` (within the `rainbow-env` environment if applicable) for a list of available command arguments and descriptions.
+Once installed, Rainbow can be used through a CLI. Run `rainbow --help` or `rainbow -h` (within the `rainbow-env` environment) for a list of available command arguments and descriptions.
 
 To test Rainbow using an example Air-Liquid Interface cell culture image series, follow the instructions under option B of the <a href="#installation">installation</a> procedure (except for step 7) and run the following commands in the terminal:
 
@@ -108,7 +102,7 @@ rainbow ../examples/example_image_series ../misc/configs/default_config.yaml
 After processing is finished, a folder containing similar outputs (e.g. a HTML report,  videos, images, CSV files) to those in [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_output/(tif)_191018_HNA-ALI_d14.nd2_-_191018_HNA-ALI_d14.nd2_(series_03)0000_etc) example output folder should be generated in [this](https://github.com/AlphonsG/Rainbow-Optical-Flow-For-ALI/tree/main/examples/example_image_series) folder.
 ### Graphical User Interface (GUI)
 
-Once installed, Rainbow can be be used through a GUI, which can be launched by running the command `rainbow` (within the `rainbow-env` environment if applicable).
+Once installed, Rainbow can be be used through a GUI, which can be launched by running the command `rainbow` (within the `rainbow-env` environment).
 
 To test Rainbow using an example Air-Liquid Interface cell culture image series, follow the instructions under option B of the <a href="#installation">installation</a> procedure (except for step 7) and run the following commands in the terminal::
 
