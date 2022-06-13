@@ -1,6 +1,5 @@
 import os
 import shutil
-from itertools import cycle
 from pathlib import Path
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 
@@ -70,15 +69,15 @@ def process_files(root_dir, config, num_workers=0, sub_dirs=False,
                                  config[config['optical_flow_model']],
                                  max_num_parl_preds, num_workers)
     model_manager.start()
-    models = model_manager.models
+    models = model_manager.models.copy()
 
     # begin parallel processing (but don't spawn new process if
     # num_workers = 1)
     worker = Worker(config, use_existing_flow, cleanup_output_dirs,
                     analyze_data)
-    stage = (pl.process.map(worker, zip(dirs, cycle(models)),
-             workers=num_workers) if num_workers != 1 else map(worker,
-             zip(dirs, cycle(models))))
+    stage = (pl.process.map(worker, dirs, workers=num_workers,
+             on_start=lambda: dict(model=models.pop())) if num_workers != 1
+             else (worker(curr_dir, models[0]) for curr_dir in dirs))
     _ = (list(_ for _ in tqdm(stage, total=len(dirs))) if num_workers != 1 else
          [_ for _ in tqdm(stage, total=len(dirs))])
 
@@ -123,8 +122,7 @@ class Worker:
         self.cleanup = cleanup_output_dirs
         self.analyze_data = analyze_data
 
-    def __call__(self, args):
-        curr_dir, model = args
+    def __call__(self, curr_dir, model):
         img_seqs = self._load_image_sequences(curr_dir)
         for imgs in img_seqs:
             output_dir = Path(self._det_output_dir(imgs, self.config))
