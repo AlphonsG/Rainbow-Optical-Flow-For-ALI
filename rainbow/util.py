@@ -220,35 +220,6 @@ def apply_metadata(img1, img2):
     return img1
 
 
-def save_optical_flow(preds, output_dir):
-    """Saves optical flow predictions to a file in output_dir.
-
-    Args:
-        preds (list): A list of optical flow predictions as numpy arrays.
-        output_dir (string): The path to the output directory.
-    """
-    np.save(os.path.join(output_dir, rainbow.OPTICAL_FLOW_FILENAME),
-            np.array(preds), allow_pickle=False)
-
-
-def load_optical_flow(flow_path):
-    """Loads optical flow predictions from a file.
-
-    Args:
-        flow_path (string): The path to a .npy file containing saved optical
-            flow predictions.
-
-    Returns:
-        list: A list of optical flow predictions as numpy arrays.
-    """
-    raw_preds = np.load(flow_path)
-    preds = []
-    for i in range(0, raw_preds.shape[0]):
-        preds.append(raw_preds[i, ...])
-
-    return preds
-
-
 def save_img_ser_metadata(imgs, output_dir):
     """Saves image sequence metadata to a .json file in output_dir.
 

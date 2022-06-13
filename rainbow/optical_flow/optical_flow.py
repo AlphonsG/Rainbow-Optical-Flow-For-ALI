@@ -106,3 +106,50 @@ def flow_to_img(flow, normalize=True, info=None, flow_mag_max=None):
         cv2.putText(img, info, (20, 20), font, 0.8, (0, 0, 0), 2, cv2.LINE_AA)
 
     return img
+
+
+def save_optical_flow(preds, output_dir):
+    """Saves optical flow predictions to a file in output_dir.
+
+    Args:
+        preds (np.array): Optical flow predictions as a numpy array.
+        output_dir (string): The path to the output directory.
+    """
+    np.save(os.path.join(output_dir, OPTICAL_FLOW_FILENAME), preds,
+            allow_pickle=False)
+
+
+def load_optical_flow(flow_path):
+    """Loads optical flow predictions from a file.
+
+    Args:
+        flow_path (string): The path to a .npy file containing saved optical
+            flow predictions.
+
+    Returns:
+        list: A list of optical flow predictions as numpy arrays.
+    """
+    raw_preds = np.load(flow_path)
+    preds = []
+    for i in range(0, raw_preds.shape[0]):
+        preds.append(raw_preds[i, ...])
+
+    return preds
+
+
+def get_img_pairs(imgs):
+    """Returns image pairs.
+
+    Duplicates every image of an image sequence, except the first and last,
+    and groups pairs of images.
+
+    Args:
+        imgs (list): A list of images.
+
+    Returns:
+        list: A list of images pairs.
+    """
+    img_pairs = [[imgs[i][0], imgs[i + 1][0]] for i in range(
+        0, len(imgs) - 1)]
+
+    return img_pairs
