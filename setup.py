@@ -10,7 +10,6 @@ REQUIRED_PACKAGES = [
     'nd2reader',
     'PyYAML',
     'scikit-image',
-    'tqdm',
     'ipympl',
     'einops',
     'pytest',
@@ -21,7 +20,8 @@ REQUIRED_PACKAGES = [
     'physt',
     'bumpver',
     'Pillow < 9.1.0 ; platform_system=="Darwin"',
-    'pytest-cov'
+    'pytest-cov',
+    'pypeln'
 ]
 
 CLASSIFIERS = [
